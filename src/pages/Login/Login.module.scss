@@ -1,0 +1,83 @@
+/* Login.module.scss */
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Thiết lập chiều cao để trang đăng nhập chiếm toàn bộ màn hình */
+}
+
+/* Login.module.scss */
+
+.login-form-container {
+    flex: 1; /* Phần form chiếm một phần lớn không gian trên trang */
+    padding: 20px;
+    border-right: 1px solid #ccc; /* Đường viền phân chia giữa form và hình ảnh */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form-container h1 {
+    font-size: 50px;
+    color: #f6b9bb;
+    margin-bottom: 20px;
+}
+
+.login-form-wrapper {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 50%;
+    height: 50%;
+}
+
+.image-container {
+    flex: 1; /* Phần hình ảnh chiếm một phần lớn không gian trên trang */
+    max-width: 50%; /* Hình ảnh chỉ chiếm tối đa 50% chiều ngang của trang */
+}
+
+.image-container img {
+    width: 100%; /* Hình ảnh vẫn tự động điều chỉnh kích thước để vừa với phần chứa */
+    height: auto; /* Đảm bảo tỷ lệ khung hình không bị biến đổi */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label,
+.form-group input {
+    display: block;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+button[type='submit'] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type='submit']:hover {
+    background-color: #0056b3;
+}
+
+.forgot-password {
+    margin-top: 10px; /* Khoảng cách từ dòng "Login" đến "Quên mật khẩu?" */
+    text-align: right; /* Căn chỉnh chữ sang phải */
+    font-size: 14px; /* Cỡ chữ */
+    color: #666; /* Màu chữ */
+    text-decoration: underline; /* Gạch chân dưới chữ */
+    cursor: pointer; /* Biến con trỏ thành bàn phím khi di chuột qua */
+}
