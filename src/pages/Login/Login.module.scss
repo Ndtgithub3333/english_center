@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh; /* Thiết lập chiều cao để trang đăng nhập chiếm toàn bộ màn hình */
+    background-color: #efc4c5;
 }
 
 /* Login.module.scss */
@@ -21,6 +22,7 @@
 .login-form-container h1 {
     font-size: 50px;
     margin-bottom: 20px;
+
 }
 
 .login-form-wrapper {
@@ -49,8 +51,7 @@
 .form-group input {
     display: block;
 }
-.form-group label 
-{
+.form-group label {
     font-weight: 700;
     margin-bottom: 8px;
 }

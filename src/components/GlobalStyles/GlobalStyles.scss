@@ -3,10 +3,6 @@
 
 :root {
     --primary: #fe2c55;
-
-    //Default layout
-    --default-layout-header-height: 60px;
-    --default-layout-width: 1150px;
 }
 
 * {
@@ -15,12 +11,18 @@
     box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+    height: 100%; /* Chiếm bằng chiều cao của viewport */
+}
+
 html {
     font-size: 62.5%;
 }
 
 body {
-    font-family: 'IBM Plex Sans', san-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;

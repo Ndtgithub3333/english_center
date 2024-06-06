@@ -1,12 +1,18 @@
+/* Header.module.scss */
+
 .wrapper {
-    width: 100%;
-    height: var(--default-layout-header-height, 60px);
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 1px;
-    display: flex;
-    justify-content: center;
+    width: 100%; /* Chiều rộng 100% */
+    background-color: #007bff; /* Màu nền header (màu xanh) */
+    padding: 10px 20px; /* Khoảng cách bên trong header */
 }
 
 .inner {
-    width: var(--default-layout-width);
-    height: 100%;
+    display: flex; /* Sử dụng flexbox để căn giữa nội dung */
+    align-items: center; /* Căn giữa nội dung theo chiều dọc */
+}
+
+.logo {
+    width: 80px; /* Độ rộng của logo */
+    height: auto; /* Chiều cao tự động theo tỷ lệ */
+    background-color: transparent; /* Xóa nền của ảnh */
 }
