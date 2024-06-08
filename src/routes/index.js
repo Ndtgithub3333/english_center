@@ -7,6 +7,7 @@ import Profile from '~/pages/Profile';
 import Login from '~/pages/Login'
 import Admin from '~/pages/Admin'
 import Dashboard from '~/pages/Dashboard';
+import Classes from '~/pages/Classes';
 
 // Public routes
 const publicRoutes = [
@@ -14,7 +15,7 @@ const publicRoutes = [
     { path: '/login',  component: Login, layout: LoginLayout},
     { path: '/admin', component: Admin },
     { path: '/admin/dashboard', component: Dashboard },
-    { path: '/admin/classes', component: Dashboard },
+    { path: '/admin/classes', component: Classes },
     { path: '/admin/teachers', component: Dashboard },
     { path: '/admin/students', component: Dashboard },
     { path: '/admin/record', component: Dashboard },
