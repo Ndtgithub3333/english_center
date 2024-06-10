@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const API_URL = 'http://192.168.110.106:5000';
+export const API_URL = 'http://localhost:5000';
 
 
 export const postApi = async(url, post, token ) => {

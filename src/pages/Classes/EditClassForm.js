@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import classNames from "classnames/bind";
 import styles from '~/pages/Classes/EditClassForm.module.scss';
+import { getApi } from '~/utils/fetchData';
 
-const fakeTeachers = [
-    { id: 1, name: 'Teacher A' },
-    { id: 2, name: 'Teacher B' },
-    { id: 3, name: 'Teacher C' }
-];
+// const fakeTeachers = [
+//     { id: 1, name: 'Teacher A' },
+//     { id: 2, name: 'Teacher B' },
+//     { id: 3, name: 'Teacher C' }
+// ];
 
 const cx = classNames.bind(styles);
 
@@ -15,6 +16,8 @@ function EditClassForm({ onSave, onCancel, classData }) {
     const [lessons, setLessons] = useState('');
     const [fee, setFee] = useState('');
     const [selectedTeacher, setSelectedTeacher] = useState('');
+    const [teachers, setTeachers] = useState([]); //
+
 
     useEffect(() => {
         if (classData) {
@@ -52,6 +55,23 @@ function EditClassForm({ onSave, onCancel, classData }) {
         onCancel();
     };
 
+    const handleFetchTeachers = async () => {  
+        try {
+            const response = await getApi('teacher/names');
+            if (response.status !== 200) {
+                alert('Failed to fetch teachers');
+                return;
+            }   
+            setTeachers(response.data.map(teacher => ({ id: teacher.id, name: teacher.full_name })));
+        } catch(ex) {
+            alert(`Failed to fetch teachers: ${ex.message}`);
+        }
+    }
+
+    useEffect(() => {
+        handleFetchTeachers();
+    }, []);
+
     return (
         <div className={cx('edit-class-form')}>
             <h2>Edit Class</h2>
@@ -82,7 +102,7 @@ function EditClassForm({ onSave, onCancel, classData }) {
                 </label>
                 <select value={selectedTeacher} onChange={(e) => setSelectedTeacher(e.target.value)}>
                     <option value="">Select Teacher</option>
-                    {fakeTeachers.map(teacher => (
+                    {teachers.map(teacher => (
                         <option key={teacher.id} value={teacher.name}>{teacher.name}</option>
                     ))}
                 </select>

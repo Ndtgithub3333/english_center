@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import classNames from "classnames/bind";
 import styles from '~/pages/Login/Login.module.scss';
-
+import { postApi } from '~/utils/fetchData';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
 
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
@@ -16,7 +19,11 @@ function Login() {
         setPassword(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleNavigate = () =>  {
+        navigate('/')
+    }
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         // Kiểm tra xem username và password có hợp lệ không
         if (username.trim() === '' || password.trim() === '') {
@@ -25,10 +32,21 @@ function Login() {
         }
         // Xử lý logic đăng nhập ở đây
         const formData = {
-            username: username,
-            password: password
+            user_name: username,
+            password: password,
+            user_type: 'admin'
         };
-        console.log('Thông tin đăng nhập:', formData);
+        
+        try {
+            const response = await postApi('auth/login', formData);
+            if (response.status === 200) {
+                handleNavigate();
+            } else {
+                alert('Đăng nhập thất bại!');
+            }
+        } catch(ex) {
+            alert(`Đăng nhập thất bại: ${ex.message}`);
+        }
     };
 
     return (

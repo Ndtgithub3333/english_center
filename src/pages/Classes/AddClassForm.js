@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from "classnames/bind";
 import styles from '~/pages/Classes/AddClassForm.module.scss';
+import { getApi } from '~/utils/fetchData';
 
 const cx = classNames.bind(styles);
 
@@ -9,12 +10,13 @@ function AddClassForm({ onCreateClass, onCancel }) {
     const [tuitionFees, setTuitionFees] = useState('');
     const [expectedLessons, setExpectedLessons] = useState(''); // New state for Expected Lessons
     const [selectedTeacher, setSelectedTeacher] = useState('');
+    const [teachers, setTeachers] = useState([]); // New state for teachers
 
-    const teachers = [
-        { id: 1, name: 'Teacher A' },
-        { id: 2, name: 'Teacher B' },
-        { id: 3, name: 'Teacher C' }
-    ];
+    // const teachers = [
+    //     { id: 1, name: 'Teacher A' },
+    //     { id: 2, name: 'Teacher B' },
+    //     { id: 3, name: 'Teacher C' }
+    // ];
 
     const handleCreateClass = () => {
         if (className === '' || tuitionFees === '' || expectedLessons === '' || selectedTeacher === '') {
@@ -46,6 +48,23 @@ function AddClassForm({ onCreateClass, onCancel }) {
     const handleCancel = () => {
         onCancel();
     };
+
+    const handleFetchTeachers = async () => {  
+        try {
+            const response = await getApi('teacher/names');
+            if (response.status !== 200) {
+                alert('Failed to fetch teachers');
+                return;
+            }   
+            setTeachers(response.data.map(teacher => ({ id: teacher.id, name: teacher.full_name })));
+        } catch(ex) {
+            alert(`Failed to fetch teachers: ${ex.message}`);
+        }
+    }
+
+    useEffect(() => {
+        handleFetchTeachers();
+    }, []);
 
     return (
         <div className={cx('add-class-form')}>
