@@ -10,6 +10,7 @@
 .header {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -19,7 +20,14 @@
   margin-right: 20px;
 }
 
-.title {}
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+
+}
 
 .header h1 {
   color: #5800b0;
@@ -34,6 +42,7 @@
   font-size: 20px;
   color: #2c3e50;
   margin: 0 0 10px;
+  
 }
 
 .content p {
@@ -66,7 +75,7 @@
   width: 50%;
   height: auto;
   position: absolute;
-  top: calc(50% + 25px); /* Center vertically relative to the container */
+  top: calc(50% + 35px); /* Center vertically relative to the container */
   right: 10px; /* Adjust as needed */
   transform: translateY(-50%); /* Center the image vertically */
 }
