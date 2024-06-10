@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import classNames from "classnames/bind";
 import styles from '~/pages/Login/Login.module.scss';
+import img from '~/assets/popUp1.png';
+import logo from '~/assets/kma.png';
 
 const cx = classNames.bind(styles);
 
@@ -18,12 +20,10 @@ function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Kiểm tra xem username và password có hợp lệ không
         if (username.trim() === '' || password.trim() === '') {
             alert('Vui lòng nhập đầy đủ thông tin đăng nhập.');
             return;
         }
-        // Xử lý logic đăng nhập ở đây
         const formData = {
             username: username,
             password: password
@@ -56,12 +56,13 @@ function Login() {
                             />
                         </div>
                         <button type="submit">Login</button>
-                        <p className={cx('forgot-password')}>Quên mật khẩu?</p> {/* Thêm dòng "Quên mật khẩu?" */}
+                        <p className={cx('forgot-password')}>Quên mật khẩu?</p>
                     </form>
                 </div>
             </div>
             <div className={cx('image-container')}>
-                <img src="https://actvn.edu.vn/News/GetImage/28180" alt="anhLogin" />
+                <img src={img} alt="anhLogin" />
+                <img className={cx('logo')} src={logo} alt="anh logo" />
             </div>
         </div>
     );

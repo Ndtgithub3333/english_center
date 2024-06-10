@@ -1,17 +1,13 @@
-/* Login.module.scss */
-
 .login-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Thiết lập chiều cao để trang đăng nhập chiếm toàn bộ màn hình */
-    background-color: #efc4c5;
+    height: 100vh; /* Full screen height */
+    background-color: #ccc;
 }
 
-/* Login.module.scss */
-
 .login-form-container {
-    flex: 1; /* Phần form chiếm một phần lớn không gian trên trang */
+    flex: 1; /* Form section takes up part of the screen space */
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -22,7 +18,6 @@
 .login-form-container h1 {
     font-size: 50px;
     margin-bottom: 20px;
-
 }
 
 .login-form-wrapper {
@@ -34,13 +29,22 @@
 }
 
 .image-container {
-    flex: 1; /* Phần hình ảnh chiếm một phần lớn không gian trên trang */
-    max-width: 50%; /* Hình ảnh chỉ chiếm tối đa 50% chiều ngang của trang */
+    flex: 1; /* Image section takes up part of the screen space */
+    max-width: 50%; /* Image container width */
+    position: relative; /* Container for absolute positioning */
 }
 
 .image-container img {
-    width: 100%; /* Hình ảnh vẫn tự động điều chỉnh kích thước để vừa với phần chứa */
-    height: auto; /* Đảm bảo tỷ lệ khung hình không bị biến đổi */
+    width: 100%; /* Image adjusts to container width */
+    height: auto; /* Keep aspect ratio */
+}
+
+.image-container .logo {
+    position: absolute;
+    top: 50px; /* Adjust as needed */
+    left: 10px; /* Adjust as needed */
+    width: 20%; /* Adjust size as needed */
+    height: auto;
 }
 
 .form-group {
@@ -51,6 +55,7 @@
 .form-group input {
     display: block;
 }
+
 .form-group label {
     font-weight: 700;
     margin-bottom: 8px;
@@ -78,10 +83,10 @@ button[type='submit']:hover {
 }
 
 .forgot-password {
-    margin-top: 10px; /* Khoảng cách từ dòng "Login" đến "Quên mật khẩu?" */
-    text-align: right; /* Căn chỉnh chữ sang phải */
-    font-size: 14px; /* Cỡ chữ */
-    color: #4d9cb0; /* Màu chữ */
-    text-decoration: underline; /* Gạch chân dưới chữ */
-    cursor: pointer; /* Biến con trỏ thành bàn phím khi di chuột qua */
+    margin-top: 10px; /* Margin from the "Login" button to "Forgot password?" */
+    text-align: right; /* Align text to the right */
+    font-size: 14px; /* Font size */
+    color: #4d9cb0; /* Text color */
+    text-decoration: underline; /* Underline text */
+    cursor: pointer; /* Change cursor to pointer on hover */
 }
