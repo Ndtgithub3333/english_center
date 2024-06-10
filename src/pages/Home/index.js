@@ -1,5 +1,5 @@
 function Home() {
-    return <h2>Home page</h2>;
+    return <h2>Quang cao khoa hoc chuan bi mo</h2>;
 }
 
 export default Home;
