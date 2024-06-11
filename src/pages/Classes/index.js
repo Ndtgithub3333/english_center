@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import styles from '~/pages/Classes/Classes.module.scss';
 import AddClassForm from '~/pages/Classes/AddClassForm';
 import EditClassForm from '~/pages/Classes/EditClassForm';
+import { delApi, getApi } from '~/utils/fetchData';
 
 const cx = classNames.bind(styles);
 
@@ -27,8 +28,19 @@ function Classes() {
         setClasses(fakeClasses);
     }, []);
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
+        const backupClasses = [...classes];
         setClasses(classes.filter(cls => cls.id !== id));
+        try {
+            // Call API to delete class
+            const response = await delApi(`class/${id}`);
+            if (response.status !== 200) {
+                alert('Failed to delete class');
+            }
+        } catch(ex) {
+            alert(`Failed to delete class: ${ex.message}`);
+            setClasses(backupClasses);
+        }
     };
 
     const handleViewDetails = (id) => {
@@ -59,6 +71,28 @@ function Classes() {
         setShowForm(false);
         setEditClassId(null);
     };
+
+    const handleFetchClasses = async () => {
+        try {
+            const response = await getApi('class');
+            if (response.status === 200) {
+                console.log(response.data);
+                setClasses(response.data.map(cls => ({
+                    id: cls.id,
+                    title: cls.class_name,
+                    studentCount: cls.Students.length,
+                    expectedLessons: 20,
+                    teacherName: cls.Teacher.full_name
+                })));
+            }
+        } catch (ex) {
+            alert(`Failed to fetch classes: ${ex.message}`);
+        }
+    }
+
+    useEffect(() => {
+        handleFetchClasses();
+     }, [])
 
     return (
         <div className={cx('classes-page')}>
