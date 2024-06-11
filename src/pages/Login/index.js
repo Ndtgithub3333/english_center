@@ -34,6 +34,9 @@ function Login() {
     return (
         <div className={cx('login-page')}>
             <div className={cx('login-form-container')}>
+                <div className={cx('logo-container')}>
+                    <img className={cx('logo')} src={logo} alt="anh logo" />
+                </div>
                 <h1>Login</h1>
                 <div className={cx('login-form-wrapper')}>
                     <form onSubmit={handleSubmit}>
@@ -62,7 +65,6 @@ function Login() {
             </div>
             <div className={cx('image-container')}>
                 <img src={img} alt="anhLogin" />
-                <img className={cx('logo')} src={logo} alt="anh logo" />
             </div>
         </div>
     );

@@ -1,18 +1,29 @@
+/* Login.module.scss */
 .login-page {
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh; /* Full screen height */
-    background-color: #ccc;
 }
 
 .login-form-container {
-    flex: 1; /* Form section takes up part of the screen space */
-    padding: 20px;
+    flex: 1;
+    background-color: #ccc;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+    position: relative;
+}
+
+.logo-container {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    left: 10px; /* Adjust as needed */
+}
+
+.logo {
+    width: 80px; /* Adjust size as needed */
+    height: auto;
 }
 
 .login-form-container h1 {
@@ -29,22 +40,17 @@
 }
 
 .image-container {
-    flex: 1; /* Image section takes up part of the screen space */
-    max-width: 50%; /* Image container width */
-    position: relative; /* Container for absolute positioning */
+    flex: 1;
+    background-color: #ccc;
+    max-width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .image-container img {
     width: 100%; /* Image adjusts to container width */
     height: auto; /* Keep aspect ratio */
-}
-
-.image-container .logo {
-    position: absolute;
-    top: 50px; /* Adjust as needed */
-    left: 10px; /* Adjust as needed */
-    width: 20%; /* Adjust size as needed */
-    height: auto;
 }
 
 .form-group {
