@@ -1,0 +1,81 @@
+.announcement {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative; /* Ensure child elements with absolute positioning are relative to this container */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.header img {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+
+}
+
+.header h1 {
+  color: #5800b0;
+  margin: 0;
+}
+
+.content {
+  margin-top: 10px;
+}
+
+.content h2 {
+  font-size: 20px;
+  color: #2c3e50;
+  margin: 0 0 10px;
+  
+}
+
+.content p {
+  font-size: 16px;
+  color: #34495e;
+  margin: 5px 0;
+}
+
+.benefits {
+  margin-top: 20px;
+}
+
+.benefits h2 {
+  font-size: 20px;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.benefits ul {
+  padding: 0;
+}
+
+.benefits ul li {
+  font-size: 16px;
+  color: #333131;
+  margin-bottom: 5px;
+}
+
+.image {
+  width: 50%;
+  height: auto;
+  position: absolute;
+  top: calc(50% + 35px); /* Center vertically relative to the container */
+  right: 10px; /* Adjust as needed */
+  transform: translateY(-50%); /* Center the image vertically */
+}
