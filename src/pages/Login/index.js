@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import classNames from "classnames/bind";
 import styles from '~/pages/Login/Login.module.scss';
+import { postApi } from '~/utils/fetchData';
+import { useNavigate } from 'react-router-dom';
 import img from '~/assets/popUp1.png';
 import logo from '~/assets/kma.png';
 
