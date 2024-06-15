@@ -10,6 +10,7 @@ import Admin from '~/pages/Admin'
 import Dashboard from '~/pages/Dashboard'
 import Classes from '~/pages/Classes'
 import Advertising from '~/pages/Advertising'
+import Teachers from '~/pages/Teachers'
 
 // Các tuyến đường công khai
 const publicRoutes = [
@@ -18,7 +19,7 @@ const publicRoutes = [
     { path: '/admin', component: Admin },
     { path: '/admin/dashboard', component: Dashboard },
     { path: '/admin/classes', component: Classes },
-    { path: '/admin/teachers', component: Dashboard },
+    { path: '/admin/teachers', component: Teachers },
     { path: '/admin/students', component: Dashboard },
     { path: '/admin/record', component: Dashboard },
     { path: '/admin/advertising', component: Advertising },
