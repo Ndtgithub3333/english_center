@@ -4,7 +4,7 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  position: relative; /* Ensure child elements with absolute positioning are relative to this container */
+  position: relative;
 }
 
 .header {
@@ -26,7 +26,6 @@
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
-
 }
 
 .header h1 {
@@ -42,7 +41,6 @@
   font-size: 20px;
   color: #2c3e50;
   margin: 0 0 10px;
-  
 }
 
 .content p {
@@ -75,7 +73,7 @@
   width: 50%;
   height: auto;
   position: absolute;
-  top: calc(50% + 35px); /* Center vertically relative to the container */
-  right: 10px; /* Adjust as needed */
-  transform: translateY(-50%); /* Center the image vertically */
+  top: calc(50% + 35px);
+  right: 10px;
+  transform: translateY(-50%);
 }

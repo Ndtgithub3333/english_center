@@ -1,10 +1,7 @@
-/* Sidebar.module.scss */
-
 .wrapper {
-    width: 200px; /* Độ rộng của sidebar */
+    width: 180px; /* Độ rộng của sidebar */
     height: 100%; /* Chiều cao của sidebar sẽ giống với chiều cao của viewport */
-    background-color: #333; /* Màu nền của sidebar */
-    color: #fff; /* Màu chữ của các mục trong sidebar */
+    background-color: #c5c2cf; /* Màu nền của sidebar */
 }
 
 .wrapper li {
@@ -13,11 +10,12 @@
 }
 
 .wrapper li a {
-    color: #fff; /* Màu chữ của các liên kết */
+    font-size: 16px;
+    color: #333; /* Màu chữ của các liên kết */
     text-decoration: none; /* Loại bỏ gạch chân của các liên kết */
     display: block; /* Biến các liên kết thành khối phần tử, để chúng chiếm toàn bộ chiều ngang của sidebar */
 }
 
 .wrapper li a:hover {
-    background-color: #555; /* Màu nền của các mục khi di chuột qua */
+    background-color: #bababa; /* Màu nền của các mục khi di chuột qua */
 }

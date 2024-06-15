@@ -1,5 +1,8 @@
-import classNames from "classnames/bind";
-import styles from "./Header.module.scss";
+import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import classNames from 'classnames/bind';
+import styles from './Header.module.scss';
+import kma from '~/assets/kma.png';
 
 const cx = classNames.bind(styles);
 
@@ -7,7 +10,9 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <img src="https://cdn.haitrieu.com/wp-content/uploads/2021/10/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.png" alt="Logo" className={cx('logo')} />
+                <Link to="/" className={cx('logo-link')}>
+                    <img src={kma} alt="Logo" className={cx('logo')} />
+                </Link>
             </div>
         </header>
     );

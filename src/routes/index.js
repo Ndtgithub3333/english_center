@@ -1,32 +1,30 @@
-// Layouts
+// Đường dẫn
 import { HeaderOnly } from '~/components/Layout'
-import {LoginLayout} from '~/components/Layout'
-//Page
+import { LoginLayout } from '~/components/Layout'
+
+// Các trang
 import Home from '~/pages/Home'
-import Profile from '~/pages/Profile';
+import Profile from '~/pages/Profile'
 import Login from '~/pages/Login'
 import Admin from '~/pages/Admin'
-import Dashboard from '~/pages/Dashboard';
-import Classes from '~/pages/Classes';
+import Dashboard from '~/pages/Dashboard'
+import Classes from '~/pages/Classes'
+import Advertising from '~/pages/Advertising'
 
-// Public routes
+// Các tuyến đường công khai
 const publicRoutes = [
     { path: '/', component: Home },
-    { path: '/login',  component: Login, layout: LoginLayout},
+    { path: '/login', component: Login, layout: LoginLayout },
     { path: '/admin', component: Admin },
     { path: '/admin/dashboard', component: Dashboard },
     { path: '/admin/classes', component: Classes },
     { path: '/admin/teachers', component: Dashboard },
     { path: '/admin/students', component: Dashboard },
     { path: '/admin/record', component: Dashboard },
-    { path: '/admin/advertising', component: Dashboard },
+    { path: '/admin/advertising', component: Advertising },
     { path: '/profile', component: Profile },
-    
 ]
 
-const privateRoutes = [
-
-
-]
+const privateRoutes = []
 
 export { publicRoutes, privateRoutes }

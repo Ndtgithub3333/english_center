@@ -3,7 +3,7 @@
 .Home {
     position: relative;
     width: 100%;
-    height: calc(100vh - 100px); /* Chiều cao tối đa của màn hình */
+    height: 100%; /* Chiều cao tối đa của màn hình */
     overflow: hidden; /* Ẩn phần bị tràn ra ngoài của phần tử cha */
     background-color: #f4c2c2;
   }
