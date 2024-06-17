@@ -2,42 +2,62 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f2f2f2;
+    background-color: #f9f9f9;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 10px;
     text-align: left;
 
     h2 {
         text-align: center;
         margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
     }
 
     .detail-container {
         display: flex;
+        flex-direction: row;
         gap: 20px;
+
+        @media (max-width: 600px) {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 
     .photo-section {
         flex: 1;
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         .teacher-photo {
             width: 150px;
             height: 150px;
             border-radius: 50%;
+            object-fit: cover;
         }
     }
 
     .info-section {
         flex: 2;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 15px;
 
         .detail-group {
+            width: calc(50% - 10px);
             margin-bottom: 10px;
+
+            @media (max-width: 600px) {
+                width: 100%;
+            }
 
             label {
                 font-weight: bold;
                 display: block;
                 margin-bottom: 5px;
+                color: #555;
             }
 
             span {
@@ -45,7 +65,31 @@
                 padding: 8px;
                 background: #fff;
                 border: 1px solid #ccc;
-                border-radius: 3px;
+                border-radius: 5px;
+                color: #333;
+            }
+        }
+
+        .password-container {
+            display: flex;
+            align-items: center;
+
+            span {
+                flex: 1;
+            }
+
+            .eye-button {
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 0;
+                margin-left: 10px;
+                font-size: 18px;
+                color: #555;
+
+                &:hover {
+                    color: #000;
+                }
             }
         }
     }

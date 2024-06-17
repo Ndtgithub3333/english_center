@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './EditTeacherForm.module.scss';
 import avatar from '~/assets/avatar.jpg';
-import { getApi } from '~/utils/fetchData';
 
 const cx = classNames.bind(styles);
 
@@ -89,39 +88,9 @@ function EditTeacherForm({ onSave, onCancel, teacherData }) {
         onCancel();
     };
 
-    const handleFetchTeacherDetails = async () => {
-        try {
-            const response = await getApi(`teacher/${teacherData.id}`);
-            if (response.status !== 200) {
-                alert('Failed to fetch teacher details');
-                return;
-            }
-            const fetchedTeacher = response.data;
-            setFullName(fetchedTeacher.fullName);
-            setPhoto(fetchedTeacher.photo);
-            setGender(fetchedTeacher.gender);
-            setDateOfBirth(fetchedTeacher.dateOfBirth);
-            setMobilePhone(fetchedTeacher.mobilePhone);
-            setEmail(fetchedTeacher.email);
-            setEmployeeRole(fetchedTeacher.employeeRole);
-            setDateOfJoining(fetchedTeacher.dateOfJoining);
-            setAccountStatus(fetchedTeacher.accountStatus);
-            setUsername(fetchedTeacher.username);
-            setPassword(fetchedTeacher.password);
-        } catch (ex) {
-            alert(`Failed to fetch teacher details: ${ex.message}`);
-        }
-    };
-
-    useEffect(() => {
-        if (teacherData) {
-            handleFetchTeacherDetails();
-        }
-    }, [teacherData]);
-
     return (
         <div className={cx('edit-teacher-form')}>
-            <h2>Edit Teacher</h2>
+            <h2>Teacher's Info</h2>
             <div className={cx('form-container')}>
                 <div className={cx('form-group', 'img-upload')}>
                     <label>Photo</label>

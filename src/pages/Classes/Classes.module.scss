@@ -28,7 +28,8 @@
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        width: 300px;
+        width: calc(25% - 15px);
+        min-width: 220px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -91,14 +92,13 @@
         flex-grow: 1; /* Để phần tiêu đề mở rộng để chia đều không gian với giá trị */
         font-weight: 500; /* In đậm tiêu đề */
     }
-    
+
     .info-value {
         text-align: right;
         flex-shrink: 1; /* Để phần giá trị co lại khi cần thiết */
         margin-left: 10px; /* Tạo khoảng cách giữa tiêu đề và giá trị */
         font-weight: 500; /* In đậm giá trị */
     }
-    
 
     .add-class-card {
         background-color: #7f9fdf;

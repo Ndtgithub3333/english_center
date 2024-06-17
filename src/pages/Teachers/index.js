@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Teachers.module.scss';
 import EditTeacherForm from './EditTeacherForm';
-import TeacherDetail from './TeacherDetail'; // Import TeacherDetail component
+import TeacherDetail from './TeacherDetail';
 import avatar from '~/assets/avatar.jpg';
 
 const cx = classNames.bind(styles);
@@ -23,7 +23,7 @@ function Teachers() {
             employeeRole: 'Math Teacher',
             accountStatus: 'Active',
             username: 'johndoe',
-            password: '********'
+            password: '123456'
         },
         {
             id: 2,
@@ -39,21 +39,68 @@ function Teachers() {
             employeeRole: 'English Teacher',
             accountStatus: 'Inactive',
             username: 'janesmith',
-            password: '********'
+            password: '123456'
+        },
+        {
+            id: 3,
+            fullName: 'Emily Johnson',
+            photo: avatar,
+            gender: 'Female',
+            dateOfBirth: '20/09/1990',
+            mobilePhone: '456-789-0123',
+            email: 'emily@example.com',
+            monthlySalary: '25,000,000 VND',
+            dateOfJoining: '2023-02-01',
+            homeAddress: '789 Pine St',
+            employeeRole: 'Science Teacher',
+            accountStatus: 'Active',
+            username: 'emilyjohnson',
+            password: '123456'
+        },
+        {
+            id: 4,
+            fullName: 'Michael Brown',
+            photo: avatar,
+            gender: 'Male',
+            dateOfBirth: '11/03/1975',
+            mobilePhone: '321-654-0987',
+            email: 'michael@example.com',
+            monthlySalary: '18,000,000 VND',
+            dateOfJoining: '2023-03-01',
+            homeAddress: '101 Oak St',
+            employeeRole: 'History Teacher',
+            accountStatus: 'Active',
+            username: 'michaelbrown',
+            password: '123456'
+        },
+        {
+            id: 5,
+            fullName: 'Sarah Davis',
+            photo: avatar,
+            gender: 'Female',
+            dateOfBirth: '25/12/1988',
+            mobilePhone: '567-890-1234',
+            email: 'sarah@example.com',
+            monthlySalary: '24,000,000 VND',
+            dateOfJoining: '2023-04-01',
+            homeAddress: '202 Birch St',
+            employeeRole: 'Art Teacher',
+            accountStatus: 'Inactive',
+            username: 'sarahdavis',
+            password: '123456'
         }
-        // Add more teachers as needed
     ]);
-    
+
     const [showForm, setShowForm] = useState(false);
     const [editTeacherId, setEditTeacherId] = useState(null);
-    const [viewTeacherId, setViewTeacherId] = useState(null); // State to manage viewing details
+    const [viewTeacherId, setViewTeacherId] = useState(null);
 
     const handleDelete = (id) => {
         setTeachers(teachers.filter(teacher => teacher.id !== id));
     };
 
     const handleViewDetails = (id) => {
-        setViewTeacherId(id); // Set the ID of the teacher to view
+        setViewTeacherId(id);
     };
 
     const handleEdit = (id) => {
@@ -71,7 +118,7 @@ function Teachers() {
             const updatedTeachers = teachers.map(teacher => (teacher.id === editTeacherId ? newTeacherData : teacher));
             setTeachers(updatedTeachers);
         } else {
-            newTeacherData.id = teachers.length + 1; // Assign a new ID
+            newTeacherData.id = teachers.length + 1;
             setTeachers([...teachers, newTeacherData]);
         }
         setShowForm(false);
@@ -81,7 +128,7 @@ function Teachers() {
     const handleCancel = () => {
         setShowForm(false);
         setEditTeacherId(null);
-        setViewTeacherId(null); // Reset viewTeacherId when canceling view
+        setViewTeacherId(null);
     };
 
     return (
@@ -92,7 +139,7 @@ function Teachers() {
                     <EditTeacherForm
                         onSave={handleCreateTeacher}
                         onCancel={handleCancel}
-                        initialTeacherData={editTeacherId !== null ? teachers.find(teacher => teacher.id === editTeacherId) : null}
+                        teacherData={editTeacherId !== null ? teachers.find(teacher => teacher.id === editTeacherId) : null}
                     />
                 </div>
             )}
@@ -135,7 +182,7 @@ function Teachers() {
                                 </div>
                                 <div className={cx('info-row')}>
                                     <div className={cx('info-label')}>Password:</div>
-                                    <div className={cx('info-value')}>{teacher.password}</div>
+                                    <div className={cx('info-value')}>******</div> {/* Always show masked password */}
                                 </div>
                             </div>
                             <div className={cx('teacher-actions')}>
