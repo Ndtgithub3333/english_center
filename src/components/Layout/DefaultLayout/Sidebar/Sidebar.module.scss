@@ -1,6 +1,7 @@
 .wrapper {
     width: 180px; /* Độ rộng của sidebar */
-    height: 100%; /* Chiều cao của sidebar sẽ giống với chiều cao của viewport */
+    height: auto; /* Chiều cao của sidebar sẽ giống với chiều cao của viewport */
+    min-height: 100vh;
     background-color: #c5c2cf; /* Màu nền của sidebar */
 }
 

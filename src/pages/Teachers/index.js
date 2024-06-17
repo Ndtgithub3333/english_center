@@ -1,9 +1,8 @@
-// ~/pages/Teachers/Teachers.jsx
 import React, { useState } from 'react';
-import classNames from "classnames/bind";
+import classNames from 'classnames/bind';
 import styles from './Teachers.module.scss';
 import EditTeacherForm from './EditTeacherForm';
-import AddTeacherForm from './AddTeacherForm'; // Import AddTeacherForm
+import TeacherDetail from './TeacherDetail'; // Import TeacherDetail component
 import avatar from '~/assets/avatar.jpg';
 
 const cx = classNames.bind(styles);
@@ -14,8 +13,14 @@ function Teachers() {
             id: 1,
             fullName: 'John Doe',
             photo: avatar,
-            employeeRole: 'Math Teacher',
+            gender: 'Male',
+            dateOfBirth: '01/01/1980',
+            mobilePhone: '123-456-7890',
+            email: 'john@example.com',
+            monthlySalary: '20,000,000 VND',
             dateOfJoining: '2023-01-01',
+            homeAddress: '123 Main St',
+            employeeRole: 'Math Teacher',
             accountStatus: 'Active',
             username: 'johndoe',
             password: '********'
@@ -24,24 +29,31 @@ function Teachers() {
             id: 2,
             fullName: 'Jane Smith',
             photo: avatar,
-            employeeRole: 'English Teacher',
+            gender: 'Female',
+            dateOfBirth: '15/06/1985',
+            mobilePhone: '098-765-4321',
+            email: 'jane@example.com',
+            monthlySalary: '22,000,000 VND',
             dateOfJoining: '2022-12-15',
+            homeAddress: '456 Maple Ave',
+            employeeRole: 'English Teacher',
             accountStatus: 'Inactive',
             username: 'janesmith',
             password: '********'
         }
         // Add more teachers as needed
     ]);
-
+    
     const [showForm, setShowForm] = useState(false);
     const [editTeacherId, setEditTeacherId] = useState(null);
+    const [viewTeacherId, setViewTeacherId] = useState(null); // State to manage viewing details
 
     const handleDelete = (id) => {
         setTeachers(teachers.filter(teacher => teacher.id !== id));
     };
 
     const handleViewDetails = (id) => {
-        alert(`Viewing details for teacher id: ${id}`);
+        setViewTeacherId(id); // Set the ID of the teacher to view
     };
 
     const handleEdit = (id) => {
@@ -50,8 +62,8 @@ function Teachers() {
     };
 
     const handleAddTeacher = () => {
-        setEditTeacherId(null); // Set editTeacherId to null
-        setShowForm(true); // Show the form
+        setEditTeacherId(null);
+        setShowForm(true);
     };
 
     const handleCreateTeacher = (newTeacherData) => {
@@ -69,29 +81,30 @@ function Teachers() {
     const handleCancel = () => {
         setShowForm(false);
         setEditTeacherId(null);
+        setViewTeacherId(null); // Reset viewTeacherId when canceling view
     };
 
     return (
         <div className={cx('teachers-page')}>
             <h1>Teachers</h1>
-            {showForm && editTeacherId === null && (
-                <div className={cx('form-container')}>
-                    <AddTeacherForm
-                        onSave={handleCreateTeacher}
-                        onCancel={handleCancel}
-                    />
-                </div>
-            )}
-            {showForm && editTeacherId !== null && (
+            {showForm && (
                 <div className={cx('form-container')}>
                     <EditTeacherForm
                         onSave={handleCreateTeacher}
                         onCancel={handleCancel}
-                        teacherData={teachers.find(teacher => teacher.id === editTeacherId)}
+                        initialTeacherData={editTeacherId !== null ? teachers.find(teacher => teacher.id === editTeacherId) : null}
                     />
                 </div>
             )}
-            {!showForm && (
+            {viewTeacherId !== null && (
+                <div className={cx('form-container')}>
+                    <TeacherDetail
+                        teacher={teachers.find(teacher => teacher.id === viewTeacherId)}
+                        onClose={handleCancel}
+                    />
+                </div>
+            )}
+            {!showForm && viewTeacherId === null && (
                 <div className={cx('teachers-list')}>
                     {teachers.map(teacher => (
                         <div key={teacher.id} className={cx('teacher-card', {
