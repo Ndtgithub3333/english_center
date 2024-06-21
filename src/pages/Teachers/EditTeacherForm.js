@@ -17,6 +17,8 @@ function EditTeacherForm({ onSave, onCancel, teacherData }) {
     const [accountStatus, setAccountStatus] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [monthlySalary, setMonthlySalary] = useState('');
+    const [homeAddress, setHomeAddress] = useState('');
 
     useEffect(() => {
         if (teacherData) {
@@ -31,6 +33,8 @@ function EditTeacherForm({ onSave, onCancel, teacherData }) {
             setAccountStatus(teacherData.accountStatus);
             setUsername(teacherData.username);
             setPassword(teacherData.password);
+            setMonthlySalary(teacherData.monthlySalary);
+            setHomeAddress(teacherData.homeAddress);
         }
     }, [teacherData]);
 
@@ -47,7 +51,7 @@ function EditTeacherForm({ onSave, onCancel, teacherData }) {
 
     const handleSave = () => {
         // Validate required fields
-        if (!fullName || !gender || !dateOfBirth || !mobilePhone || !email || !employeeRole || !dateOfJoining || !accountStatus || !username || !password) {
+        if (!fullName || !gender || !dateOfBirth || !mobilePhone || !email || !employeeRole || !dateOfJoining || !accountStatus || !username || !password || !monthlySalary || !homeAddress) {
             alert('Please fill in all fields.');
             return;
         }
@@ -78,7 +82,9 @@ function EditTeacherForm({ onSave, onCancel, teacherData }) {
             dateOfJoining,
             accountStatus,
             username,
-            password
+            password,
+            monthlySalary,
+            homeAddress
         };
         onSave(updatedTeacher);
         alert('Teacher updated successfully!');
@@ -124,12 +130,20 @@ function EditTeacherForm({ onSave, onCancel, teacherData }) {
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className={cx('form-group')}>
-                    <label>Employee Role</label>
-                    <input type="text" value={employeeRole} onChange={(e) => setEmployeeRole(e.target.value)} />
+                    <label>Monthly Salary</label>
+                    <input type="number" value={monthlySalary} onChange={(e) => setMonthlySalary(e.target.value)} />
                 </div>
                 <div className={cx('form-group')}>
                     <label>Date of Joining</label>
                     <input type="date" value={dateOfJoining} onChange={(e) => setDateOfJoining(e.target.value)} />
+                </div>
+                <div className={cx('form-group')}>
+                    <label>Home Address</label>
+                    <input type="text" value={homeAddress} onChange={(e) => setHomeAddress(e.target.value)} />
+                </div>
+                <div className={cx('form-group')}>
+                    <label>Employee Role</label>
+                    <input type="text" value={employeeRole} onChange={(e) => setEmployeeRole(e.target.value)} />
                 </div>
                 <div className={cx('form-group')}>
                     <label>Account Status</label>
