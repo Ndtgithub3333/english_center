@@ -96,7 +96,10 @@ function Teachers() {
     const [viewTeacherId, setViewTeacherId] = useState(null);
 
     const handleDelete = (id) => {
-        setTeachers(teachers.filter(teacher => teacher.id !== id));
+        const confirmDelete = window.confirm("Are you sure you want to delete this teacher?");
+        if (confirmDelete) {
+            setTeachers(teachers.filter(teacher => teacher.id !== id));
+        }
     };
 
     const handleViewDetails = (id) => {

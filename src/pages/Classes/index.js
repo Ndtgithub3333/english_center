@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import classNames from "classnames/bind";
+import classNames from 'classnames/bind';
 import styles from '~/pages/Classes/Classes.module.scss';
 import AddClassForm from '~/pages/Classes/AddClassForm';
 import EditClassForm from '~/pages/Classes/EditClassForm';
@@ -29,6 +29,11 @@ function Classes() {
     }, []);
 
     const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this class?");
+        if (!confirmDelete) {
+            return;
+        }
+
         const backupClasses = [...classes];
         setClasses(classes.filter(cls => cls.id !== id));
         try {
@@ -37,7 +42,7 @@ function Classes() {
             if (response.status !== 200) {
                 alert('Failed to delete class');
             }
-        } catch(ex) {
+        } catch (ex) {
             alert(`Failed to delete class: ${ex.message}`);
             setClasses(backupClasses);
         }
@@ -88,11 +93,11 @@ function Classes() {
         } catch (ex) {
             alert(`Failed to fetch classes: ${ex.message}`);
         }
-    }
+    };
 
     useEffect(() => {
         handleFetchClasses();
-     }, [])
+    }, []);
 
     return (
         <div className={cx('classes-page')}>
