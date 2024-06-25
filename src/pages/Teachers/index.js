@@ -218,8 +218,8 @@ function Teachers() {
                                     <div className={cx('info-value')}>{teacher.employeeRole}</div>
                                 </div>
                                 <div className={cx('info-row')}>
-                                    <div className={cx('info-label')}>Date of Joining:</div>
-                                    <div className={cx('info-value')}>{teacher.dateOfJoining}</div>
+                                    <div className={cx('info-label')}>Mobile Phone:</div>
+                                    <div className={cx('info-value')}>{teacher.mobilePhone}</div>
                                 </div>
                                 <div className={cx('info-row')}>
                                     <div className={cx('info-label')}>Account Status:</div>
@@ -232,10 +232,7 @@ function Teachers() {
                                     <div className={cx('info-label')}>Username:</div>
                                     <div className={cx('info-value')}>{teacher.username}</div>
                                 </div>
-                                <div className={cx('info-row')}>
-                                    <div className={cx('info-label')}>Password:</div>
-                                    <div className={cx('info-value')}>******</div> {/* Always show masked password */}
-                                </div>
+                              
                             </div>
                             <div className={cx('teacher-actions')}>
                                 <button onClick={() => handleViewDetails(teacher.id)}>🔍</button>

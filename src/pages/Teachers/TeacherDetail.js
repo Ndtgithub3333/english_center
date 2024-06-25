@@ -12,6 +12,8 @@ function TeacherDetail({ teacher, onClose }) {
         setShowPassword(prevShowPassword => !prevShowPassword);
     };
 
+    const filteredKeys = Object.keys(teacher).filter(key => key !== 'password' && key !== 'id');
+
     return (
         <div className={cx('teacher-detail')}>
             <h2>Teacher Details</h2>
@@ -20,22 +22,20 @@ function TeacherDetail({ teacher, onClose }) {
                     <img src={teacher.photo} alt="Teacher" className={cx('teacher-photo')} />
                 </div>
                 <div className={cx('info-section')}>
-                    {Object.keys(teacher).map((key) => (
-                        key !== 'photo' && (
-                            <div className={cx('detail-group')} key={key}>
-                                <label>{key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:</label>
-                                {key === 'password' ? (
-                                    <div className={cx('password-container')}>
-                                        <span>{showPassword ? teacher[key] : '********'}</span>
-                                        <button onClick={togglePasswordVisibility} className={cx('eye-button')}>
-                                            {showPassword ? <FaEyeSlash /> : <FaEye />}
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <span>{teacher[key]}</span>
-                                )}
-                            </div>
-                        )
+                    {filteredKeys.map((key) => (
+                        <div className={cx('detail-group')} key={key}>
+                            <label>{key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:</label>
+                            {key === 'password' ? (
+                                <div className={cx('password-container')}>
+                                    <span>{showPassword ? teacher[key] : '********'}</span>
+                                    <button onClick={togglePasswordVisibility} className={cx('eye-button')}>
+                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                    </button>
+                                </div>
+                            ) : (
+                                <span>{teacher[key]}</span>
+                            )}
+                        </div>
                     ))}
                 </div>
             </div>
