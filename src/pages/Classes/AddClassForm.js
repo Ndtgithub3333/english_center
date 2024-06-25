@@ -19,22 +19,24 @@ function AddClassForm({ onCreateClass, onCancel }) {
     // ];
 
     const handleCreateClass = () => {
-        if (className === '' || tuitionFees === '' || expectedLessons === '' || selectedTeacher === '') {
-            alert('All fields are required! Please fill in all required fields.');
-            return;
-        }
+        // if (className === '' || tuitionFees === '' || expectedLessons === '' || selectedTeacher === '') {
+        //     alert('All fields are required! Please fill in all required fields.');
+        //     return;
+        // }
 
-        const isValidNumber = /^\d+$/.test(tuitionFees) && /^\d+$/.test(expectedLessons);
-        if (!isValidNumber) {
-            alert('Monthly Tuition Fees and Expected Lessons must be valid numbers!');
-            return;
-        }
+        // const isValidNumber = /^\d+$/.test(tuitionFees) && /^\d+$/.test(expectedLessons);
+        // if (!isValidNumber) {
+        //     alert('Monthly Tuition Fees and Expected Lessons must be valid numbers!');
+        //     return;
+        // }
 
         onCreateClass({
             title: className,
             studentCount: 0,
+            tuitionFees: parseInt(tuitionFees), // Convert to integer
             expectedLessons: parseInt(expectedLessons), // Convert to integer
-            teacherName: selectedTeacher
+            teacherId: selectedTeacher, 
+            teacherName: teachers.find(teacher => teacher.id === selectedTeacher).name
         });
 
         alert('Class created successfully!');
@@ -97,7 +99,7 @@ function AddClassForm({ onCreateClass, onCancel }) {
                 <select value={selectedTeacher} onChange={(e) => setSelectedTeacher(e.target.value)}>
                     <option value="">Select Teacher</option>
                     {teachers.map(teacher => (
-                        <option key={teacher.id} value={teacher.name}>{teacher.name}</option>
+                        <option key={teacher.id} value={teacher.id}>{teacher.name}</option>
                     ))}
                 </select>
             </div>

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Teachers.module.scss';
 import EditTeacherForm from './EditTeacherForm';
 import TeacherDetail from './TeacherDetail';
 import avatar from '~/assets/avatar.jpg';
+import { getApi } from '~/utils/fetchData';
 
 const cx = classNames.bind(styles);
 
@@ -116,6 +117,54 @@ function Teachers() {
         setShowForm(true);
     };
 
+    useEffect(() => {
+        handleFetchTeachers();
+    }, [])
+
+    const handleFetchTeachers = async () => {
+        try {
+            const res = await getApi('teacher');
+            if (res.status !== 200) {
+                alert('Failed to fetch teachers');
+                return;
+            }
+
+
+            // "id": "965821ca-77eb-4098-a93c-c019c5e1e2d2",
+            // "gender": "Female",
+            // "mobile_phone": "331231232",
+            // "monthly_salary": "12312312.00",
+            // "home_address": "fgadsfadsf",
+            // "account_status": true,
+            // "full_name": "fdsfdsfdsf",
+            // "date_of_birth": "2024-06-12",
+            // "email": "winter@winter.com",
+            // "employee_role": "fasdfadsfa",
+            // "user_name": "winter",
+            // "password": "winter123"
+
+
+            setTeachers(res.data.teachers.map(cls => ({
+                id: cls.id,
+            fullName: cls.full_name,
+            // photo: cls.pc,
+            gender: cls.gender,
+            dateOfBirth: cls.date_of_birth,
+            mobilePhone: cls.mobile_phone,
+            email: cls.email,
+            monthlySalary: cls.monthly_salary,
+            // dateOfJoining: cls.date_of_joining,
+            homeAddress: cls.home_address,
+            employeeRole: cls.employee_role,
+            accountStatus: cls.account_status == 1 ? 'Active' : 'Inactive',
+            username: cls.user_name,
+            // password: '123456'
+            })))
+        } catch(ex) {
+            alert(`Failed to fetch teachers: ${ex.message}`);
+        }
+    }
+
     const handleCreateTeacher = (newTeacherData) => {
         if (editTeacherId !== null) {
             const updatedTeachers = teachers.map(teacher => (teacher.id === editTeacherId ? newTeacherData : teacher));
@@ -162,7 +211,7 @@ function Teachers() {
                             inactive: teacher.accountStatus !== 'Active'
                         })}>
                             <div className={cx('teacher-info')}>
-                                <img src={teacher.photo} alt="Teacher" className={cx('teacher-photo')} />
+                                <img src={avatar} alt="Teacher" className={cx('teacher-photo')} />
                                 <h2>{teacher.fullName}</h2>
                                 <div className={cx('info-row')}>
                                     <div className={cx('info-label')}>Employee Role:</div>

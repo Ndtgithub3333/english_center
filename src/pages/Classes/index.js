@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from '~/pages/Classes/Classes.module.scss';
 import AddClassForm from '~/pages/Classes/AddClassForm';
 import EditClassForm from '~/pages/Classes/EditClassForm';
-import { delApi, getApi } from '~/utils/fetchData';
+import { delApi, getApi, postApi, patchApi } from '~/utils/fetchData';
 
 const cx = classNames.bind(styles);
 
@@ -39,7 +39,7 @@ function Classes() {
         try {
             // Call API to delete class
             const response = await delApi(`class/${id}`);
-            if (response.status !== 200) {
+            if (response.status < 200 && response.status <= 300) {
                 alert('Failed to delete class');
             }
         } catch (ex) {
@@ -61,12 +61,34 @@ function Classes() {
         setShowForm(true);
     };
 
-    const handleCreateClass = (newClassData) => {
+    const handleCreateClass = async (newClassData) => {
         if (editClassId !== null) {
             const updatedClasses = classes.map(cls => (cls.id === editClassId ? newClassData : cls));
             setClasses(updatedClasses);
+
+            try {
+                await patchApi(`class/${editClassId}`,{
+                    class_name: newClassData.title,
+                    monthly_tuition_fee: newClassData.tuitionFees,
+                    expected_lessons: newClassData.expectedLessons,
+                    teacher_id: newClassData.teacherId
+                })
+            } catch(ex) {
+                alert(`Failed to update class: ${ex.message}`);
+            }
         } else {
             setClasses([...classes, newClassData]);
+
+            try {
+                await postApi('class', {
+                    class_name: newClassData.title, 
+                    monthly_tuition_fee: newClassData.tuitionFees,
+                    expected_lessons: newClassData.expectedLessons,
+                    teacher_id: newClassData.teacherId
+                });
+            } catch(ex) {
+                alert(`Failed to create class: ${ex.message}`);
+            }
         }
         setShowForm(false);
         setEditClassId(null);
@@ -85,9 +107,11 @@ function Classes() {
                 setClasses(response.data.map(cls => ({
                     id: cls.id,
                     title: cls.class_name,
-                    studentCount: cls.Students.length,
-                    expectedLessons: 20,
-                    teacherName: cls.Teacher.full_name
+                    studentCount: cls.student_count,
+                    tuitionFees: cls.monthly_tuition_fee,
+                    expectedLessons: cls.expected_lessons,
+                    teacherId: cls.teacher_id,
+                    teacherName: cls.teacher.full_name
                 })));
             }
         } catch (ex) {
