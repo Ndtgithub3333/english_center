@@ -24,28 +24,29 @@ function EditClassForm({ onSave, onCancel, classData }) {
             setClassName(classData.title);
             setLessons(String(classData.expectedLessons));
             setFee(String(classData.tuitionFees));
-            setSelectedTeacher(classData.teacherName);
+            setSelectedTeacher(classData.teacherId);
         }
     }, [classData]);
 
     const handleSave = () => {
-        if (className === '' || lessons === '' || fee === '' || selectedTeacher === '') {
-            alert('All fields are required! Please fill in all required fields.');
-            return;
-        }
+        // if (className === '' || lessons === '' || fee === '' || selectedTeacher === '') {
+        //     alert('All fields are required! Please fill in all required fields.');
+        //     return;
+        // }
 
-        const isValidNumber = /^\d+$/.test(lessons) && /^\d+$/.test(fee);
-        if (!isValidNumber) {
-            alert('Lessons and Fee must be valid numbers!');
-            return;
-        }
+        // const isValidNumber = /^\d+$/.test(lessons) && /^\d+$/.test(fee);
+        // if (!isValidNumber) {
+        //     alert('Lessons and Fee must be valid numbers!');
+        //     return;
+        // }
 
         onSave({
             ...classData,
             title: className,
             expectedLessons: parseInt(lessons),
             tuitionFees: parseInt(fee),
-            teacherName: selectedTeacher
+            teacherId: selectedTeacher,
+            teacherName: teachers.find(teacher => teacher.id === selectedTeacher).name,
         });
 
         alert('Class updated successfully!');
@@ -103,7 +104,7 @@ function EditClassForm({ onSave, onCancel, classData }) {
                 <select value={selectedTeacher} onChange={(e) => setSelectedTeacher(e.target.value)}>
                     <option value="">Select Teacher</option>
                     {teachers.map(teacher => (
-                        <option key={teacher.id} value={teacher.name}>{teacher.name}</option>
+                        <option key={teacher.id} value={teacher.id}>{teacher.name}</option>
                     ))}
                 </select>
             </div>
