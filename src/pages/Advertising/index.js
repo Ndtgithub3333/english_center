@@ -3,6 +3,7 @@ import Popup from '~/components/Layout/components/Popup';
 import Announcement from '~/components/Layout/components/Announcement';
 import logo from '~/assets/kma.png';
 import styles from '~/pages/Advertising/Advertising.module.scss';
+import { postApi, putApi } from '~/utils/fetchData';
 
 const Advertising = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -28,10 +29,21 @@ const Advertising = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSave = () => {
+  const handleSave = async() => {
     // Lưu dữ liệu vào localStorage hoặc gửi đến API
-    localStorage.setItem('announcement', JSON.stringify(formData));
-    alert('Announcement saved successfully!');
+    // localStorage.setItem('announcement', JSON.stringify(formData));
+    try {
+      await putApi('announcement', {
+        course_name: formData.courseName,
+        day_of_the_week: formData.dayOfWeek,
+        start_time: formData.startTime,
+        end_time: formData.endTime,
+        start_date: formData.startDate
+      });
+      alert('Announcement saved successfully!');
+    } catch(e) {
+      alert(`Failed to save announcement: ${e.message}`);
+    }
   };
 
   return (

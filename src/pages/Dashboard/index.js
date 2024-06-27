@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import classNames from "classnames/bind";
 import styles from '~/pages/Dashboard/Dashboard.module.scss';
 import Chart from 'chart.js/auto';
+import { getApi } from '~/utils/fetchData';
 
 const cx = classNames.bind(styles);
 
@@ -16,10 +17,41 @@ function Dashboard() {
         { className: 'Class 4', count: 40 },
         { className: 'Class 5', count: 60 },
     ]);
+    const [revenue, setRevenue] = useState([5000, 8000, 6000]);
     const chartRef = useRef(null);
     const revenueChartRef = useRef(null);
 
+
+    const handleFetchDashBoard = async () => {
+        try {
+            const res = await getApi('dashboard');
+            const data = res.data;
+            setTotalStudents(data.totalStudents);
+            setTotalTeachers(data.totalTeachers);
+            setStudentStatistics(data.studentsPerClass.map((ele) => {
+                return {
+                    className: ele.class_name,
+                    count: ele.total_students
+                }
+            }));
+            setRevenue([
+                data.totalPaidSalary,
+                data.totalExpectedMoney,
+                data.totalCollectedMoney
+            ]);
+        } catch(e) {
+            alert(`Failed to fetch dashboard data: ${e.message}`)
+        }
+    }
+
     useEffect(() => {
+        handleFetchDashBoard();
+    }, [])
+
+
+
+    useEffect(() => {
+
         if (chartRef.current) {
             chartRef.current.destroy();
         }
@@ -81,7 +113,7 @@ function Dashboard() {
                 labels: ['Paid to Teachers', 'Expected from Students', 'Collected from Students'],
                 datasets: [{
                     label: 'Revenue',
-                    data: [5000, 8000, 6000],
+                    data: revenue,
                     backgroundColor: ['#ffcd56', '#36a2eb', '#ff6384']
                 }]
             },
@@ -99,7 +131,7 @@ function Dashboard() {
                 }
             }
         });
-    }, [studentStatistics]);
+    }, [studentStatistics, revenue]);
 
     return (
         <div className={cx('dashboard')}>
