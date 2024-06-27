@@ -1,0 +1,74 @@
+.teacherDetailContainer {
+    padding: 20px;
+}
+
+.teacherDetailContainer h2 {
+    margin-bottom: 10px;
+}
+
+.personalInfoContainer {
+    border: 1px solid #ccc;
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+
+.personalInfo {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.infoItem {
+    flex: 1 1 50%; /* Display each item in 50% width */
+    margin-bottom: 10px;
+}
+
+.teachingClassContainer {
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+.teachingClassTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.teachingClassTable th, .teachingClassTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.teachingClassTable th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.teachingClassTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.teachingClassTable tr:hover {
+    background-color: #ddd;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.icon {
+    cursor: pointer;
+    font-size: 1.2em; /* Adjust size as needed */
+    transition: color 0.3s;
+}
+
+.icon:hover {
+    color: #007bff;
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.2em;
+    padding: 20px;
+}
