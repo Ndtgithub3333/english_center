@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Class.module.scss';
+import styles from './Teacher.module.scss';
 
 const fakeTeacherData = [
     {
@@ -26,18 +26,26 @@ const fakeTeacherData = [
 
 function RecordTeacher() {
     const [teacherList, setTeacherList] = useState([]);
+    const [totalTeacherSalary, setTotalTeacherSalary] = useState(0);
 
     useEffect(() => {
         // Mimic an API call
         setTimeout(() => {
             setTeacherList(fakeTeacherData);
+            // Calculate the total salary paid to all teachers
+            const totalSalary = fakeTeacherData.reduce((sum, teacher) => sum + teacher.paid, 0);
+            setTotalTeacherSalary(totalSalary);
         }, 1000); // Simulate a delay
     }, []);
 
     return (
-        <div className={styles.classContainer}>
+        <div className={styles.teacherContainer}>
             <h1>Teacher Records</h1>
-            <table className={styles.classTable}>
+            <div className={styles.totalSalaries}>
+                <h3>Salary for Teachers:</h3>
+                <p>${totalTeacherSalary}</p>
+            </div>
+            <table className={styles.teacherTable}>
                 <thead>
                     <tr>
                         <th>Teacher Name</th>

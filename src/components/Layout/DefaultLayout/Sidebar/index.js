@@ -21,7 +21,7 @@ function Sidebar() {
                 <li><Link to="/admin/students">Students</Link></li>
                 <li className={cx('has-submenu')}>
                     <div className={cx('parent-link')} onClick={toggleRecord}>
-                        <Link style={{flex: 1}} to="/admin/record">Record</Link>
+                        <span style={{ flex: 1 }}>Record</span>
                         <span className={cx('toggle-icon')}>
                             {isRecordOpen ? '-' : '+'}
                         </span>

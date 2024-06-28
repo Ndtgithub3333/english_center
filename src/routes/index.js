@@ -13,6 +13,7 @@ import Record from '~/pages/Record';
 import RecordClass from '~/pages/Record/Class';
 import RecordClassDetail from '~/pages/Record/ClassDetail';
 import RecordTeacherDetail from '~/pages/Record/TeacherDetail';
+import RecordStudentDetail from '~/pages/Record/StudentDetail';
 import RecordTeacher from '~/pages/Record/Teacher';
 import RecordStudent from '~/pages/Record/Student';
 import RecordParent from '~/pages/Record/Parent';
@@ -31,6 +32,7 @@ const publicRoutes = [
     { path: '/admin/record/teacher', component: RecordTeacher },
     { path: '/admin/record/teacher/:id', component: RecordTeacherDetail }, // Correct route for teacher detail
     { path: '/admin/record/class/:id', component: RecordClassDetail }, // Correct route for class detail
+    { path: '/admin/record/student/:id', component: RecordStudentDetail }, // Correct route for class detail
     { path: '/admin/record/student', component: RecordStudent },
     { path: '/admin/record/parent', component: RecordParent },
     { path: '/admin/advertising', component: Advertising },

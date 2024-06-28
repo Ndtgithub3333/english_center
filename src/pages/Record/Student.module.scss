@@ -1,46 +1,52 @@
-.teacherContainer {
+.studentContainer {
     padding: 20px;
 }
 
-.teacherTable {
+.studentTable {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.teacherTable th, .teacherTable td {
+.studentTable th,
+.studentTable td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+    vertical-align: middle; /* Ensure vertical alignment for all cells */
 }
 
-.teacherTable th {
+.studentTable th {
     background-color: #f2f2f2;
     font-weight: bold;
 }
 
-.teacherTable tr:nth-child(even) {
+.studentTable tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.teacherTable tr:hover {
+.studentTable tr:hover {
     background-color: #ddd;
 }
 
 .actions {
     display: flex;
-    gap: 10px;
     justify-content: center;
+    gap: 10px;
 }
 
 .link {
-    text-decoration: none; /* Remove underline from Link */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
 .icon {
     cursor: pointer;
     font-size: 1.2em; /* Adjust size as needed */
     transition: color 0.3s;
+    display: flex;
+    align-items: center;
 }
 
 .icon:hover {
@@ -53,14 +59,16 @@
     padding: 20px;
 }
 
-.totalSalaries {
+.totalFees {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 10px;
+
     h3 {
         margin-right: 10px;
     }
+
     p {
         font-size: 1.2em;
     }

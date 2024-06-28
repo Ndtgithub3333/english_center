@@ -1,0 +1,106 @@
+.studentDetailContainer {
+    padding: 20px;
+}
+
+.sectionContainer {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.sectionContainer h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.sectionContent {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.infoItem {
+    flex: 1 1 calc(50% - 20px); /* Display two items per row with margin between */
+    margin-bottom: 10px;
+}
+
+.attendanceTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.attendanceTable th,
+.attendanceTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.attendanceTable th {
+    background-color: #f2f2f2; /* Màu title đậm nhất */
+    // color: #fff; /* Màu chữ trắng */
+}
+
+.attendanceTable tr:nth-child(odd) {
+    background-color: #ffffff; /* Màu nền nhạt nhì */
+}
+
+.attendanceTable tr:nth-child(even) {
+    background-color: #f9f9f9; /* Màu nền trắng */
+}
+
+.attendanceTable tr:hover {
+    background-color: #e9ecef; /* Màu nền nhẹ khi hover */
+}
+
+
+.paymentInfo {
+    flex: 1 1 100%; /* Display one item per row for payment info */
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+}
+
+.paymentInfo .infoItem {
+    margin-bottom: 10px;
+}
+
+.parentInfoContainer {
+    margin-top: 20px;
+}
+
+.actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.editButton,
+.deleteButton {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff; /* Màu nút là màu xanh của Bootstrap */
+    color: #fff; /* Màu chữ trắng */
+    border-radius: 5px; /* Bo góc */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+}
+
+.editButton:hover,
+.deleteButton:hover {
+    background-color: #0056b3; /* Màu xanh đậm khi hover */
+}
+
+.link {
+    text-decoration: none;
+    color: #007bff;
+    margin-left: 10px;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

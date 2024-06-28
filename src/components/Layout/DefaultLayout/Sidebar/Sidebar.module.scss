@@ -11,6 +11,7 @@
 }
 
 .wrapper li {
+    margin-left: 8px;
     padding: 10px; /* Khoảng cách giữa các mục trong sidebar */
     list-style-type: none; /* Loại bỏ dấu đầu dòng của các mục */
     position: relative;
@@ -39,14 +40,9 @@
     padding-left: 10px;
 }
 
-.has-submenu ul {
-    display: none; /* Ban đầu ẩn submenu */
+.submenu {
     padding-left: 20px; /* Thụt lề submenu */
     list-style-type: disc; /* Dấu chấm kiểu list */
-}
-
-.has-submenu:hover ul {
-    display: block; /* Hiển thị submenu khi di chuột qua mục cha */
 }
 
 .submenu li {

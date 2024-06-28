@@ -60,7 +60,7 @@ function RecordClassDetail() {
                         <th>Birthday</th>
                         <th>Absents</th>
                         <th>Attendances</th>
-                        <th>Paid Fee</th>
+                        <th>Total Fee</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
