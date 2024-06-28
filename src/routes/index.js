@@ -1,18 +1,23 @@
-// Đường dẫn
-import { HeaderOnly } from '~/components/Layout'
-import { LoginLayout } from '~/components/Layout'
+import { LoginLayout } from '~/components/Layout';
 
-// Các trang
-import Home from '~/pages/Home'
-import Profile from '~/pages/Profile'
-import Login from '~/pages/Login'
-import Admin from '~/pages/Admin'
-import Dashboard from '~/pages/Dashboard'
-import Classes from '~/pages/Classes'
-import Advertising from '~/pages/Advertising'
-import Teachers from '~/pages/Teachers'
+// Import all your pages here
+import Home from '~/pages/Home';
+import Profile from '~/pages/Profile';
+import Login from '~/pages/Login';
+import Admin from '~/pages/Admin';
+import Dashboard from '~/pages/Dashboard';
+import Classes from '~/pages/Classes';
+import Advertising from '~/pages/Advertising';
+import Teachers from '~/pages/Teachers';
+import Record from '~/pages/Record';
+import RecordClass from '~/pages/Record/Class';
+import RecordClassDetail from '~/pages/Record/ClassDetail';
+import RecordTeacherDetail from '~/pages/Record/TeacherDetail';
+import RecordTeacher from '~/pages/Record/Teacher';
+import RecordStudent from '~/pages/Record/Student';
+import RecordParent from '~/pages/Record/Parent';
 
-// Các tuyến đường công khai
+// Define public routes
 const publicRoutes = [
     { path: '/', component: Home },
     { path: '/login', component: Login, layout: LoginLayout },
@@ -20,12 +25,19 @@ const publicRoutes = [
     { path: '/admin/dashboard', component: Dashboard },
     { path: '/admin/classes', component: Classes },
     { path: '/admin/teachers', component: Teachers },
-    { path: '/admin/students', component: Dashboard },
-    { path: '/admin/record', component: Dashboard },
+    { path: '/admin/students', component: Dashboard }, // Check if this is intended
+    { path: '/admin/record', component: Record },
+    { path: '/admin/record/class', component: RecordClass },
+    { path: '/admin/record/teacher', component: RecordTeacher },
+    { path: '/admin/record/teacher/:id', component: RecordTeacherDetail }, // Correct route for teacher detail
+    { path: '/admin/record/class/:id', component: RecordClassDetail }, // Correct route for class detail
+    { path: '/admin/record/student', component: RecordStudent },
+    { path: '/admin/record/parent', component: RecordParent },
     { path: '/admin/advertising', component: Advertising },
     { path: '/profile', component: Profile },
-]
+];
 
-const privateRoutes = []
+// Define private routes if needed
+const privateRoutes = [];
 
-export { publicRoutes, privateRoutes }
+export { publicRoutes, privateRoutes };

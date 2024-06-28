@@ -5,9 +5,15 @@
     background-color: #c5c2cf; /* Màu nền của sidebar */
 }
 
+.wrapper ul {
+    padding: 0;
+    margin: 0;
+}
+
 .wrapper li {
     padding: 10px; /* Khoảng cách giữa các mục trong sidebar */
     list-style-type: none; /* Loại bỏ dấu đầu dòng của các mục */
+    position: relative;
 }
 
 .wrapper li a {
@@ -19,4 +25,41 @@
 
 .wrapper li a:hover {
     background-color: #bababa; /* Màu nền của các mục khi di chuột qua */
+}
+
+.has-submenu .parent-link {
+    cursor: pointer; /* Thêm con trỏ trỏ tay để biểu thị có thể click */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.has-submenu .toggle-icon {
+    margin-left: auto; /* Đẩy biểu tượng sang bên phải */
+    padding-left: 10px;
+}
+
+.has-submenu ul {
+    display: none; /* Ban đầu ẩn submenu */
+    padding-left: 20px; /* Thụt lề submenu */
+    list-style-type: disc; /* Dấu chấm kiểu list */
+}
+
+.has-submenu:hover ul {
+    display: block; /* Hiển thị submenu khi di chuột qua mục cha */
+}
+
+.submenu li {
+    padding: 5px 0; /* Khoảng cách giữa các mục trong submenu */
+}
+
+.submenu li a {
+    font-size: 14px; /* Kích thước chữ nhỏ hơn cho submenu */
+    color: #333;
+    text-decoration: none;
+    display: block;
+}
+
+.submenu li a:hover {
+    background-color: #bababa; /* Màu nền của các mục submenu khi di chuột qua */
 }

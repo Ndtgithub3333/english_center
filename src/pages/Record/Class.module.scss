@@ -1,0 +1,54 @@
+.classContainer {
+    padding: 20px;
+}
+
+.classTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.classTable th, .classTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.classTable th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.classTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.classTable tr:hover {
+    background-color: #ddd;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.link {
+    text-decoration: none; /* Remove underline from Link */
+}
+
+.icon {
+    cursor: pointer;
+    font-size: 1.2em; /* Adjust size as needed */
+    transition: color 0.3s;
+}
+
+.icon:hover {
+    color: #007bff;
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.2em;
+    padding: 20px;
+}
