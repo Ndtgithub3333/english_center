@@ -9,6 +9,7 @@ import Dashboard from '~/pages/Dashboard';
 import Classes from '~/pages/Classes';
 import Advertising from '~/pages/Advertising';
 import Teachers from '~/pages/Teachers';
+import Students from '~/pages/Students';
 import Record from '~/pages/Record';
 import RecordClass from '~/pages/Record/Class';
 import RecordClassDetail from '~/pages/Record/ClassDetail';
@@ -26,7 +27,7 @@ const publicRoutes = [
     { path: '/admin/dashboard', component: Dashboard },
     { path: '/admin/classes', component: Classes },
     { path: '/admin/teachers', component: Teachers },
-    { path: '/admin/students', component: Dashboard }, // Check if this is intended
+    { path: '/admin/students', component: Students }, // Check if this is intended
     { path: '/admin/record', component: Record },
     { path: '/admin/record/class', component: RecordClass },
     { path: '/admin/record/teacher', component: RecordTeacher },

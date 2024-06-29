@@ -90,7 +90,7 @@ function TeacherDetail() {
                                 <td>{classItem.className}</td>
                                 <td>{classItem.classSize}</td>
                                 <td>{classItem.completedLessons}</td>
-                                <td>{classItem.paid}</td>
+                                <td>${classItem.paid}</td>
                                 <td className={styles.actions}>
                                     <span className={styles.icon} title={`Detail ${classItem.className}`}>🔍</span>
                                     <span className={styles.icon} title={`Edit ${classItem.className}`}>✏️</span>

@@ -73,3 +73,19 @@
         font-size: 1.2em;
     }
 }
+
+/* Payment Status Styles */
+.paymentStatus {
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.paymentStatus.paidInFull {
+    color: green;
+}
+
+.paymentStatus.remaining {
+    color: red;
+}

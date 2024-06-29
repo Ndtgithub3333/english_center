@@ -11,6 +11,8 @@ const fakeStudentData = [
     attendances: 20,
     absents: 5,
     paidFee: 150,
+    discountPercent: 0,
+    parentPaidAmount: 150,
   },
   {
     id: 2,
@@ -19,6 +21,8 @@ const fakeStudentData = [
     attendances: 18,
     absents: 2,
     paidFee: 120,
+    discountPercent: 10,
+    parentPaidAmount: 100,
   },
   // Add more fake student data as needed
 ];
@@ -47,31 +51,42 @@ function RecordStudent() {
             <th>Class</th>
             <th>Attendances</th>
             <th>Absents</th>
-            <th>Paid Fee</th>
+            <th>Total Payable Fee</th>
+            <th>Payment Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {studentList.length > 0 ? (
-            studentList.map((student, index) => (
-              <tr key={index}>
-                <td>{student.studentName}</td>
-                <td>{student.className}</td>
-                <td>{student.attendances}</td>
-                <td>{student.absents}</td>
-                <td>${student.paidFee}</td>
-                <td className={styles.actions}>
-                  <Link to={`/admin/record/student/${student.id}`} className={styles.link}>
-                    <span className={styles.icon} title={`Detail ${student.studentName}`}>🔍</span>
-                  </Link>
-                  <span className={styles.icon} title={`Edit ${student.studentName}`}>✏️</span>
-                  <span className={styles.icon} title={`Delete ${student.studentName}`}>🗑️</span>
-                </td>
-              </tr>
-            ))
+            studentList.map((student, index) => {
+              const totalPayableFee = calculateTotalPayableFee(student.paidFee, student.discountPercent);
+              const remainingFee = totalPayableFee - student.parentPaidAmount;
+              const paymentStatus = remainingFee <= 0 ? 'Paid in Full' : `$${remainingFee.toFixed(2)} remaining`;
+              const paymentStatusClass = remainingFee <= 0 ? styles.paidInFull : styles.remaining;
+
+              return (
+                <tr key={index}>
+                  <td>{student.studentName}</td>
+                  <td>{student.className}</td>
+                  <td>{student.attendances}</td>
+                  <td>{student.absents}</td>
+                  <td>${totalPayableFee.toFixed(2)}</td>
+                  <td className={`${styles.paymentStatus} ${paymentStatusClass}`}>
+                    {paymentStatus}
+                  </td>
+                  <td className={styles.actions}>
+                    <Link to={`/admin/record/student/${student.id}`} className={styles.link}>
+                      <span className={styles.icon} title={`Detail ${student.studentName}`}>🔍</span>
+                    </Link>
+                    <span className={styles.icon} title={`Edit ${student.studentName}`}>✏️</span>
+                    <span className={styles.icon} title={`Delete ${student.studentName}`}>🗑️</span>
+                  </td>
+                </tr>
+              );
+            })
           ) : (
             <tr>
-              <td colSpan="6" className={styles.loading}>Loading...</td>
+              <td colSpan="7" className={styles.loading}>Loading...</td>
             </tr>
           )}
         </tbody>
@@ -82,6 +97,11 @@ function RecordStudent() {
 
 function calculateTotalPaidFee(students) {
   return students.reduce((total, student) => total + student.paidFee, 0);
+}
+
+function calculateTotalPayableFee(paidFee, discountPercent) {
+  const discountAmount = (discountPercent / 100) * paidFee;
+  return paidFee - discountAmount;
 }
 
 export default RecordStudent;
