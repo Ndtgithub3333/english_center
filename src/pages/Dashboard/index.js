@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import classNames from "classnames/bind";
 import Chart from 'chart.js/auto';
-import styles from './Dashboard.module.scss'; // Đường dẫn import phù hợp với cấu trúc dự án của bạn
+import styles from './Dashboard.module.scss'; // Adjust import path according to your project structure
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +20,9 @@ const Dashboard = () => {
     const [monthlyStudentChanges, setMonthlyStudentChanges] = useState([]);
     const [quarterlyStudentChanges, setQuarterlyStudentChanges] = useState([]);
     const [yearlyStudentChanges, setYearlyStudentChanges] = useState([]);
-    const [timeRange, setTimeRange] = useState('month'); // State cho lựa chọn thời gian
+    const [timeRange, setTimeRange] = useState('month'); // State for time range selection
+    const [startDate, setStartDate] = useState(null); // State for start date filter
+    const [endDate, setEndDate] = useState(null); // State for end date filter
 
     const studentsLineChartRef = useRef(null);
     const revenueChartRef = useRef(null);
@@ -98,7 +100,7 @@ const Dashboard = () => {
         return fakeData;
     };
 
-    // Function to handle fetching dashboard data based on time range
+    // Function to handle fetching dashboard data based on time range and date filter
     const handleFetchDashboard = () => {
         const fakeData = generateFakeData();
 
@@ -132,7 +134,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         handleFetchDashboard();
-    }, [timeRange]);
+    }, [timeRange, startDate, endDate]); // Include startDate and endDate in dependency array
 
     // Effect to update charts whenever time range or financial data changes
     useEffect(() => {
@@ -217,20 +219,33 @@ const Dashboard = () => {
                 }
             }
         });
-    }, [timeRange, revenue]);
+    }, [timeRange, revenue, startDate, endDate]); // Include startDate and endDate in dependency array
 
-    // Function to get data based on selected time range for the chart
+    // Function to get data based on selected time range and date filter for the chart
     const getTimeRangeData = () => {
+        let filteredData = [];
+
+        // Filter data based on time range and date filter
         switch (timeRange) {
             case 'month':
-                return monthlyStudentChanges.map((item) => ({ label: item.month, value: item.value }));
+                filteredData = monthlyStudentChanges.filter((item) => {
+                    const month = item.month.toLowerCase();
+                    const startDateMonth = startDate ? startDate.toLocaleString('default', { month: 'short' }).toLowerCase() : '';
+                    const endDateMonth = endDate ? endDate.toLocaleString('default', { month: 'short' }).toLowerCase() : '';
+                    return (!startDate || month >= startDateMonth) && (!endDate || month <= endDateMonth);
+                }).map((item) => ({ label: item.month, value: item.value }));
+                break;
             case 'quarter':
-                return quarterlyStudentChanges.map((item) => ({ label: item.quarter, value: item.value }));
+                filteredData = quarterlyStudentChanges.map((item) => ({ label: item.quarter, value: item.value }));
+                break;
             case 'year':
-                return yearlyStudentChanges.map((item) => ({ label: item.year.toString(), value: item.value }));
+                filteredData = yearlyStudentChanges.map((item) => ({ label: item.year.toString(), value: item.value }));
+                break;
             default:
-                return [];
+                break;
         }
+
+        return filteredData;
     };
 
     // Function to get title based on selected time range for the chart
@@ -252,10 +267,22 @@ const Dashboard = () => {
         setTimeRange(range);
     };
 
+    // Function to handle start date change
+    const handleStartDateChange = (event) => {
+        const date = new Date(event.target.value);
+        setStartDate(date);
+    };
+
+    // Function to handle end date change
+    const handleEndDateChange = (event) => {
+        const date = new Date(event.target.value);
+        setEndDate(date);
+    };
+
     return (
         <div className={cx('dashboard')}>
             <h1>Dashboard</h1>
-            
+
             <div className={cx('top-row')}>
                 <div className={cx('info-box')}>
                     <h2>Total Students</h2>
@@ -277,6 +304,16 @@ const Dashboard = () => {
                 <button className={cx('time-button', { active: timeRange === 'year' })} onClick={() => handleTimeRangeChange('year')}>Year</button>
             </div>
 
+            {/* Date range filter */}
+            {timeRange === 'month' && (
+                <div className={cx('date-range')}>
+                    <label>Start Date:</label>
+                    <input type="date" onChange={handleStartDateChange} />
+                    <label>End Date:</label>
+                    <input type="date" onChange={handleEndDateChange} />
+                </div>
+            )}
+
             <div className={cx('chart-container')}>
                 <div className={cx('chart')}>
                     <canvas id="studentsLineChart" />
@@ -286,7 +323,6 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            
         </div>
     );
 };
