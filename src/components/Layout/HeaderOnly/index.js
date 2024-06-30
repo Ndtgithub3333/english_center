@@ -5,7 +5,7 @@ function HeaderOnly({ children }) {
         <div>
             <Header />
             <div className="container">
-                <div className="content">{children}</div>
+                <div style={{height: '100vh'}} className="content">{children}</div>
             </div>
         </div>
     );

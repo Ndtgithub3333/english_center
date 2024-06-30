@@ -1,18 +1,51 @@
-/* Header.module.scss */
-
 .wrapper {
     width: 100%; /* Chiều rộng 100% */
     background-color: #46709d; /* Màu nền header (màu xanh) */
     padding: 10px 20px; /* Khoảng cách bên trong header */
+    display: flex; /* Sử dụng flexbox */
+    justify-content: space-between; /* Căn giữa theo chiều ngang và đẩy LogoutButton về phía bên phải */
 }
 
 .inner {
+    width: 100%;
     display: flex; /* Sử dụng flexbox để căn giữa nội dung */
-    align-items: center; /* Căn giữa nội dung theo chiều dọc */
+    align-items: center; /* Căn giữa nội dung theo chiều dọc */ 
+    justify-content: space-between;
 }
 
 .logo {
     width: 80px; /* Độ rộng của logo */
     height: auto; /* Chiều cao tự động theo tỷ lệ */
     background-color: transparent; /* Xóa nền của ảnh */
+}
+
+.navigation {
+    display: flex; /* Sử dụng flexbox */
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.nav-list {
+    list-style-type: none; /* Xóa dấu đầu dòng của list */
+    padding: 0;
+    margin: 0;
+}
+
+.nav-list li {
+    display: inline-block; /* Hiển thị các mục danh sách cạnh nhau */
+    margin-right: 20px; /* Khoảng cách giữa các mục */
+}
+
+.logout-button {
+    background-color: transparent; /* Nền trong suốt */
+    border: none; /* Xóa viền */
+    color: white; /* Màu chữ trắng */
+    font-size: 14px; /* Cỡ chữ */
+    cursor: pointer; /* Con trỏ thành tay để biểu thị sẽ có tương tác */
+    padding: 8px 16px; /* Khoảng cách bên trong nút */
+    border-radius: 5px; /* Bo góc */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+}
+
+.logout-button:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Màu nền khi hover */
 }

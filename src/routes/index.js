@@ -1,4 +1,4 @@
-import { LoginLayout } from '~/components/Layout';
+import { HeaderOnly, LoginLayout } from '~/components/Layout';
 
 // Import all your pages here
 import Home from '~/pages/Home';
@@ -18,6 +18,8 @@ import RecordStudentDetail from '~/pages/Record/StudentDetail';
 import RecordTeacher from '~/pages/Record/Teacher';
 import RecordStudent from '~/pages/Record/Student';
 import RecordParent from '~/pages/Record/Parent';
+import StudentDashboard from '~/pages/StudentDashboard';
+
 
 // Define public routes
 const publicRoutes = [
@@ -37,6 +39,7 @@ const publicRoutes = [
     { path: '/admin/record/student', component: RecordStudent },
     { path: '/admin/record/parent', component: RecordParent },
     { path: '/admin/advertising', component: Advertising },
+    { path: '/student-dashboard', component: StudentDashboard, layout: HeaderOnly },
     { path: '/profile', component: Profile },
 ];
 

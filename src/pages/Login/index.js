@@ -8,9 +8,10 @@ import logo from '~/assets/kma.png';
 
 const cx = classNames.bind(styles);
 
-function Login() {
+function Login({ userType: initialUserType = 'student' }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [userType, setUserType] = useState(initialUserType); // Sử dụng useState để thiết lập giá trị mặc định
 
     const navigate = useNavigate();
 
@@ -23,8 +24,21 @@ function Login() {
     };
 
     const handleNavigate = () => {
-        navigate('/')
-    }
+        switch (userType) {
+            case 'student':
+                navigate('/student-dashboard');
+                break;
+            case 'teacher':
+                navigate('/teacher-dashboard');
+                break;
+            case 'parent':
+                navigate('/parent-dashboard');
+                break;
+            default:
+                navigate('/');
+                break;
+        }
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -35,7 +49,7 @@ function Login() {
         const formData = {
             user_name: username,
             password: password,
-            user_type: 'admin'
+            user_type: userType
         };
 
         try {
@@ -54,7 +68,7 @@ function Login() {
         <div className={cx('login-page')}>
             <div className={cx('login-form-container')}>
                 <div className={cx('logo-container')}>
-                    <img className={cx('logo')} src={logo} alt="anh logo" />
+                    <img className={cx('logo')} src={logo} alt="Logo" />
                 </div>
                 <h1>Login</h1>
                 <div className={cx('login-form-wrapper')}>
@@ -83,7 +97,7 @@ function Login() {
                 </div>
             </div>
             <div className={cx('image-container')}>
-                <img src={img} alt="anhLogin" />
+                <img src={img} alt="Image" />
             </div>
         </div>
     );
