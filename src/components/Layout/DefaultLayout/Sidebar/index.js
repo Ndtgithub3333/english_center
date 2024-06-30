@@ -31,7 +31,7 @@ function Sidebar() {
                             <li><Link to="/admin/record/class">Class</Link></li>
                             <li><Link to="/admin/record/teacher">Teacher</Link></li>
                             <li><Link to="/admin/record/student">Student</Link></li>
-                            <li><Link to="/admin/record/parent">Parent</Link></li>
+                            {/* <li><Link to="/admin/record/parent">Parent</Link></li> */}
                         </ul>
                     )}
                 </li>
