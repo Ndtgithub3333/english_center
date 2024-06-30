@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import classNames from "classnames/bind";
-import styles from '~/pages/Dashboard/Dashboard.module.scss';
 import Chart from 'chart.js/auto';
-import { getApi } from '~/utils/fetchData';
+import styles from './Dashboard.module.scss'; // Đường dẫn import phù hợp với cấu trúc dự án của bạn
 
 const cx = classNames.bind(styles);
 
-function Dashboard() {
+const Dashboard = () => {
     const [totalStudents, setTotalStudents] = useState(1000);
     const [studentsThisMonth, setStudentsThisMonth] = useState(50);
     const [totalTeachers, setTotalTeachers] = useState(50);
@@ -18,55 +17,140 @@ function Dashboard() {
         { className: 'Class 5', count: 60 },
     ]);
     const [revenue, setRevenue] = useState([5000, 8000, 6000]);
-    const chartRef = useRef(null);
+    const [monthlyStudentChanges, setMonthlyStudentChanges] = useState([]);
+    const [quarterlyStudentChanges, setQuarterlyStudentChanges] = useState([]);
+    const [yearlyStudentChanges, setYearlyStudentChanges] = useState([]);
+    const [timeRange, setTimeRange] = useState('month'); // State cho lựa chọn thời gian
+
+    const studentsLineChartRef = useRef(null);
     const revenueChartRef = useRef(null);
 
+    // Function to generate fake data
+    const generateFakeData = () => {
+        let fakeData = {};
 
-    const handleFetchDashBoard = async () => {
-        try {
-            const res = await getApi('dashboard');
-            const data = res.data;
-            setTotalStudents(data.totalStudents);
-            setTotalTeachers(data.totalTeachers);
-            setStudentStatistics(data.studentsPerClass.map((ele) => {
-                return {
-                    className: ele.class_name,
-                    count: ele.total_students
-                }
-            }));
-            setRevenue([
-                data.totalPaidSalary,
-                data.totalExpectedMoney,
-                data.totalCollectedMoney
-            ]);
-        } catch(e) {
-            alert(`Failed to fetch dashboard data: ${e.message}`)
+        // Fake data for students
+        fakeData.totalStudents = 1200;
+        fakeData.totalTeachers = 55;
+        fakeData.studentsPerClass = [
+            { class_name: 'Class 1', total_students: 30 },
+            { class_name: 'Class 2', total_students: 50 },
+            { class_name: 'Class 3', total_students: 20 },
+            { class_name: 'Class 4', total_students: 40 },
+            { class_name: 'Class 5', total_students: 60 },
+        ];
+
+        // Fake data for revenue
+        switch (timeRange) {
+            case 'month':
+                fakeData.totalPaidSalary = 7000;
+                fakeData.totalExpectedMoney = 9000;
+                fakeData.totalCollectedMoney = 7500;
+                break;
+            case 'quarter':
+                fakeData.totalPaidSalary = 21000; // Sum of 3 months
+                fakeData.totalExpectedMoney = 27000; // Sum of 3 months
+                fakeData.totalCollectedMoney = 22500; // Sum of 3 months
+                break;
+            case 'year':
+                fakeData.totalPaidSalary = 84000; // Sum of 12 months
+                fakeData.totalExpectedMoney = 108000; // Sum of 12 months
+                fakeData.totalCollectedMoney = 90000; // Sum of 12 months
+                break;
+            default:
+                fakeData.totalPaidSalary = 0;
+                fakeData.totalExpectedMoney = 0;
+                fakeData.totalCollectedMoney = 0;
+                break;
         }
-    }
+
+        // Fake data for student changes
+        fakeData.monthlyStudentChanges = [
+            { month: 'Jan', value: 100 },
+            { month: 'Feb', value: 120 },
+            { month: 'Mar', value: 90 },
+            { month: 'Apr', value: 110 },
+            { month: 'May', value: 130 },
+            { month: 'Jun', value: 95 },
+            { month: 'Jul', value: 105 },
+            { month: 'Aug', value: 115 },
+            { month: 'Sep', value: 85 },
+            { month: 'Oct', value: 125 },
+            { month: 'Nov', value: 135 },
+            { month: 'Dec', value: 100 },
+        ];
+
+        fakeData.quarterlyStudentChanges = [
+            { quarter: 'Q1', value: 310 },
+            { quarter: 'Q2', value: 350 },
+            { quarter: 'Q3', value: 320 },
+            { quarter: 'Q4', value: 330 },
+        ];
+
+        fakeData.yearlyStudentChanges = [
+            { year: 2020, value: 1200 },
+            { year: 2021, value: 1300 },
+            { year: 2022, value: 1400 },
+            { year: 2023, value: 1500 },
+            { year: 2024, value: 1600 },
+        ];
+
+        return fakeData;
+    };
+
+    // Function to handle fetching dashboard data based on time range
+    const handleFetchDashboard = () => {
+        const fakeData = generateFakeData();
+
+        setTotalStudents(fakeData.totalStudents);
+        setTotalTeachers(fakeData.totalTeachers);
+        setStudentStatistics(fakeData.studentsPerClass.map((ele) => ({
+            className: ele.class_name,
+            count: ele.total_students
+        })));
+        setRevenue([
+            fakeData.totalPaidSalary,
+            fakeData.totalExpectedMoney,
+            fakeData.totalCollectedMoney
+        ]);
+
+        // Update data based on selected time range
+        switch (timeRange) {
+            case 'month':
+                setMonthlyStudentChanges(fakeData.monthlyStudentChanges);
+                break;
+            case 'quarter':
+                setQuarterlyStudentChanges(fakeData.quarterlyStudentChanges);
+                break;
+            case 'year':
+                setYearlyStudentChanges(fakeData.yearlyStudentChanges);
+                break;
+            default:
+                break;
+        }
+    };
 
     useEffect(() => {
-        handleFetchDashBoard();
-    }, [])
+        handleFetchDashboard();
+    }, [timeRange]);
 
-
-
+    // Effect to update charts whenever time range or financial data changes
     useEffect(() => {
-
-        if (chartRef.current) {
-            chartRef.current.destroy();
+        if (studentsLineChartRef.current) {
+            studentsLineChartRef.current.destroy();
         }
 
-        const ctx = document.getElementById('studentsChart').getContext('2d');
-        chartRef.current = new Chart(ctx, {
-            type: 'bar',
+        const ctx = document.getElementById('studentsLineChart').getContext('2d');
+        studentsLineChartRef.current = new Chart(ctx, {
+            type: 'line',
             data: {
-                labels: studentStatistics.map(stat => stat.className),
+                labels: getTimeRangeData().map((item) => item.label),
                 datasets: [{
-                    label: 'Students',
-                    data: studentStatistics.map(stat => stat.count),
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
+                    label: 'Student Changes',
+                    data: getTimeRangeData().map((item) => item.value),
+                    fill: false,
+                    borderColor: '#36a2eb',
+                    tension: 0.1
                 }]
             },
             options: {
@@ -77,7 +161,7 @@ function Dashboard() {
                         display: true,
                         title: {
                             display: true,
-                            text: 'Class Names'
+                            text: getTimeRangeTitle()
                         }
                     },
                     y: {
@@ -90,12 +174,13 @@ function Dashboard() {
                 },
                 plugins: {
                     legend: {
-                        display: false
+                        display: true,
+                        position: 'bottom'
                     },
                     tooltip: {
                         callbacks: {
                             label: function (context) {
-                                return `${context.dataset.label}: ${context.raw}`;
+                                return `Number of Students: ${context.raw}`;
                             }
                         }
                     }
@@ -106,14 +191,15 @@ function Dashboard() {
         if (revenueChartRef.current) {
             revenueChartRef.current.destroy();
         }
+
         const revenueCtx = document.getElementById('revenueChart').getContext('2d');
         revenueChartRef.current = new Chart(revenueCtx, {
-            type: 'pie',
+            type: 'bar',
             data: {
                 labels: ['Paid to Teachers', 'Expected from Students', 'Collected from Students'],
                 datasets: [{
                     label: 'Revenue',
-                    data: revenue,
+                    data: [revenue[0], revenue[1], revenue[2]],
                     backgroundColor: ['#ffcd56', '#36a2eb', '#ff6384']
                 }]
             },
@@ -131,43 +217,78 @@ function Dashboard() {
                 }
             }
         });
-    }, [studentStatistics, revenue]);
+    }, [timeRange, revenue]);
+
+    // Function to get data based on selected time range for the chart
+    const getTimeRangeData = () => {
+        switch (timeRange) {
+            case 'month':
+                return monthlyStudentChanges.map((item) => ({ label: item.month, value: item.value }));
+            case 'quarter':
+                return quarterlyStudentChanges.map((item) => ({ label: item.quarter, value: item.value }));
+            case 'year':
+                return yearlyStudentChanges.map((item) => ({ label: item.year.toString(), value: item.value }));
+            default:
+                return [];
+        }
+    };
+
+    // Function to get title based on selected time range for the chart
+    const getTimeRangeTitle = () => {
+        switch (timeRange) {
+            case 'month':
+                return 'Monthly Student Changes';
+            case 'quarter':
+                return 'Quarterly Student Changes';
+            case 'year':
+                return 'Yearly Student Changes';
+            default:
+                return 'Student Changes';
+        }
+    };
+
+    // Function to handle time range change
+    const handleTimeRangeChange = (range) => {
+        setTimeRange(range);
+    };
 
     return (
         <div className={cx('dashboard')}>
             <h1>Dashboard</h1>
+            
             <div className={cx('top-row')}>
                 <div className={cx('info-box')}>
                     <h2>Total Students</h2>
-                    <i className="icon-class-name" />
                     <p>{totalStudents}</p>
-                    <div className={cx('info-footer')}>
-                        <span>This Month</span>
-                        <span>{studentsThisMonth}</span>
-                    </div>
+                </div>
+                <div className={cx('info-box')}>
+                    <h2>Students This Month</h2>
+                    <p>{studentsThisMonth}</p>
                 </div>
                 <div className={cx('info-box')}>
                     <h2>Total Teachers</h2>
-                    <i className="icon-class-name" />
                     <p>{totalTeachers}</p>
-                    <div className={cx('info-footer')}>
-                        <span>This Month</span>
-                        <span>45</span>
-                    </div>
-                </div>
-                <div className={cx('info-box')}>
-                    <h2>Revenue</h2>
-                    <div className="chart-container">
-                        <canvas id="revenueChart"></canvas>
-                    </div>
                 </div>
             </div>
-            <div className={cx('bottom-row')}>
-                <h2>Students Statistics</h2>
-                <canvas id="studentsChart"></canvas>
+            <div className={cx('controls')}>
+                <h2>Time Range</h2>
+                <button className={cx('time-button', { active: timeRange === 'month' })} onClick={() => handleTimeRangeChange('month')}>Month</button>
+                <button className={cx('time-button', { active: timeRange === 'quarter' })} onClick={() => handleTimeRangeChange('quarter')}>Quarter</button>
+                <button className={cx('time-button', { active: timeRange === 'year' })} onClick={() => handleTimeRangeChange('year')}>Year</button>
             </div>
+
+            <div className={cx('chart-container')}>
+                <div className={cx('chart')}>
+                    <canvas id="studentsLineChart" />
+                </div>
+                <div className={cx('chart')}>
+                    <canvas id="revenueChart" />
+                </div>
+            </div>
+
+            
         </div>
     );
-}
+};
 
 export default Dashboard;
