@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from '~/pages/TeacherDashboard/TeacherDashboard.module.scss';
-
+import Announcement from '~/components/Layout/components/Announcement';
+import Popup from '~/components/Layout/components/Popup';
+import { getApi } from '~/utils/fetchData';
 function TeacherDashboard({ teacherId }) {
     const [teacherData, setTeacherData] = useState(null);
     const [selectedClass, setSelectedClass] = useState(null);
@@ -9,7 +11,18 @@ function TeacherDashboard({ teacherId }) {
     const [attendanceData, setAttendanceData] = useState({});
     const [attendanceRecords, setAttendanceRecords] = useState({});
     const [filter, setFilter] = useState('all');
-
+    const [isPopupOpen, setIsPopupOpen] = useState(true); // State to manage Popup visibility
+    const [announcement, setAnnouncement] = useState({
+        logoUrl: 'https://cdn.haitrieu.com/wp-content/uploads/2021/10/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.png',
+        courseName: 'Advanced English Speaking',
+        dayOfWeek: 'Monday',
+        startTime: '2PM',
+        endTime: '4PM',
+        startDate: '1st July 2024',
+    });
+    const togglePopup = () => {
+        setIsPopupOpen(!isPopupOpen);
+    };
     useEffect(() => {
         fetchTeacherData(teacherId);
     }, [teacherId]);
@@ -56,6 +69,28 @@ function TeacherDashboard({ teacherId }) {
             alert(`Failed to fetch teacher data: ${ex.message}`);
         }
     };
+    const handleFetchAnnouncement = async () => {
+        try {
+            const res = await getApi('announcement');
+            const data = res.data;
+            setAnnouncement({
+                ...announcement,
+                courseName: data.course_name,
+                dayOfWeek: data.day_of_the_week,
+                startTime: data.start_time,
+                endTime: data.end_time,
+                startDate: data.start_date
+            })
+        } catch (e) {
+            alert(`Failed to fetch announcement data: ${e.message}`)
+        }
+    };
+    useEffect(() => {
+        fetchTeacherData(teacherId);
+        handleFetchAnnouncement(); // Call fetchAdvertisementData when component mounts
+    }, [teacherId]);
+
+    const { logoUrl, courseName, dayOfWeek, startTime, endTime, startDate } = announcement;
 
     const handleClassClick = (classId) => {
         setSelectedClass(classId);
@@ -194,6 +229,19 @@ function TeacherDashboard({ teacherId }) {
                         </div>
                     )}
                 </div>
+            )}
+            {/* Popup Announcement */}
+            {isPopupOpen && (
+                <Popup onClose={togglePopup}>
+                    <Announcement
+                        logo={logoUrl}
+                        courseName={courseName}
+                        dayOfWeek={dayOfWeek}
+                        startTime={startTime}
+                        endTime={endTime}
+                        startDate={startDate}
+                    />
+                </Popup>
             )}
         </div>
     );

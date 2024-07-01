@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import Announcement from '~/components/Layout/components/Announcement';
+import Popup from '~/components/Layout/components/Popup';
 import styles from './ParentDashboard.module.scss'; // Import SCSS styles
+import { getApi } from '~/utils/fetchData';
 
 function ParentDashboard({ parentId }) {
   const [parentData, setParentData] = useState(null);
@@ -8,10 +11,19 @@ function ParentDashboard({ parentId }) {
   const [paymentAmount, setPaymentAmount] = useState('');
   const [error, setError] = useState('');
   const [amountLeft, setAmountLeft] = useState(0); // State to track amount left to pay
+  const [isPopupOpen, setIsPopupOpen] = useState(true); // State to manage Popup visibility
+  const [announcement, setAnnouncement] = useState({
+    logoUrl: 'https://cdn.haitrieu.com/wp-content/uploads/2021/10/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.png',
+    courseName: 'Advanced English Speaking',
+    dayOfWeek: 'Monday',
+    startTime: '2PM',
+    endTime: '4PM',
+    startDate: '1st July 2024',
+  });
 
-  useEffect(() => {
-    fetchParentData(parentId);
-  }, [parentId]);
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
 
   const fetchParentData = async (parentId) => {
     try {
@@ -76,6 +88,30 @@ function ParentDashboard({ parentId }) {
       setError(`Failed to fetch parent data: ${ex.message}`);
     }
   };
+
+  const handleFetchAnnouncement = async () => {
+    try {
+      const res = await getApi('announcement');
+      const data = res.data;
+      setAnnouncement({
+        ...announcement, 
+        courseName: data.course_name, 
+        dayOfWeek: data.day_of_the_week,
+        startTime: data.start_time,
+        endTime: data.end_time,
+        startDate: data.start_date
+      })
+    } catch(e) {
+      alert(`Failed to fetch announcement data: ${e.message}`)
+    }
+  };
+  
+  useEffect(() => {
+    fetchParentData(parentId);
+    handleFetchAnnouncement(); // Call fetchAdvertisementData when component mounts
+  }, [parentId]);
+
+  const { logoUrl, courseName, dayOfWeek, startTime, endTime, startDate } = announcement;
 
   const handleChildClick = (childId) => {
     setSelectedChild(childId);
@@ -185,7 +221,7 @@ function ParentDashboard({ parentId }) {
       {selectedClass && (
         <div className={styles.classDetails}>
           <h4>Class Details:</h4>
-          <ul>
+          <ul style={{listStyle: 'none'}}>
             {parentData.children.find(child => child.id === selectedChild).classes.find(cls => cls.id === selectedClass).attendances.map((attendance, index) => (
               <li key={index}>
                 <span>{attendance.date}:</span>
@@ -210,7 +246,7 @@ function ParentDashboard({ parentId }) {
               onChange={handlePaymentChange}
               placeholder="Enter payment amount"
             />
-            <button onClick={handlePaymentSubmit}>Submit Payment</button>
+            <button className={styles.submitButton} onClick={handlePaymentSubmit}>Submit Payment</button>
             {error && <p className={styles.error}>{error}</p>}
           </div>
           <div>
@@ -225,6 +261,20 @@ function ParentDashboard({ parentId }) {
             </ul>
           </div>
         </div>
+      )}
+
+      {/* Popup Announcement */}
+      {isPopupOpen && (
+        <Popup onClose={togglePopup}>
+          <Announcement
+            logo={logoUrl}
+            courseName={courseName}
+            dayOfWeek={dayOfWeek}
+            startTime={startTime}
+            endTime={endTime}
+            startDate={startDate}
+          />
+        </Popup>
       )}
     </div>
   );

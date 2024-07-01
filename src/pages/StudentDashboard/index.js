@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import styles from './StudentDashboard.module.scss'; // Import SCSS styles
+import Announcement from '~/components/Layout/components/Announcement';
+import Popup from '~/components/Layout/components/Popup';
+import { getApi } from '~/utils/fetchData';
 
 function StudentDashboard({ studentId }) {
     const [studentData, setStudentData] = useState(null);
     const [selectedClass, setSelectedClass] = useState(null);
-
+    const [isPopupOpen, setIsPopupOpen] = useState(true); // State to manage Popup visibility
+    const [announcement, setAnnouncement] = useState({
+        logoUrl: 'https://cdn.haitrieu.com/wp-content/uploads/2021/10/Logo-Hoc-Vien-Ky-Thuat-Mat-Ma-ACTVN.png',
+        courseName: 'Advanced English Speaking',
+        dayOfWeek: 'Monday',
+        startTime: '2PM',
+        endTime: '4PM',
+        startDate: '1st July 2024',
+    });
+    const togglePopup = () => {
+        setIsPopupOpen(!isPopupOpen);
+    };
     useEffect(() => {
         fetchStudentData(studentId);
     }, [studentId]);
@@ -15,11 +29,11 @@ function StudentDashboard({ studentId }) {
             const fakeStudentData = {
                 studentName: 'Alice Johnson',
                 classes: [
-                    { 
-                        id: 'C001', 
-                        name: 'Mathematics', 
-                        teacher: 'Mr. Smith', 
-                        sessionsAttended: 15, 
+                    {
+                        id: 'C001',
+                        name: 'Mathematics',
+                        teacher: 'Mr. Smith',
+                        sessionsAttended: 15,
                         sessionsMissed: 3,
                         attendances: [
                             { date: '2024-06-01', status: 'Present' },
@@ -27,11 +41,11 @@ function StudentDashboard({ studentId }) {
                             { date: '2024-06-05', status: 'Present' }
                         ]
                     },
-                    { 
-                        id: 'C002', 
-                        name: 'Science', 
-                        teacher: 'Ms. Jones', 
-                        sessionsAttended: 12, 
+                    {
+                        id: 'C002',
+                        name: 'Science',
+                        teacher: 'Ms. Jones',
+                        sessionsAttended: 12,
                         sessionsMissed: 1,
                         attendances: [
                             { date: '2024-06-02', status: 'Present' },
@@ -39,11 +53,11 @@ function StudentDashboard({ studentId }) {
                             { date: '2024-06-06', status: 'Absent' }
                         ]
                     },
-                    { 
-                        id: 'C003', 
-                        name: 'Science', 
-                        teacher: 'Ms. Jones', 
-                        sessionsAttended: 12, 
+                    {
+                        id: 'C003',
+                        name: 'Science',
+                        teacher: 'Ms. Jones',
+                        sessionsAttended: 12,
                         sessionsMissed: 1,
                         attendances: [
                             { date: '2024-06-02', status: 'Present' },
@@ -51,22 +65,22 @@ function StudentDashboard({ studentId }) {
                             { date: '2024-06-06', status: 'Absent' }
                         ]
                     },
-                    { 
-                        id: 'C004', 
-                        name: 'Science', 
-                        teacher: 'Ms. Jones', 
-                        sessionsAttended: 12, 
+                    {
+                        id: 'C004',
+                        name: 'Science',
+                        teacher: 'Ms. Jones',
+                        sessionsAttended: 12,
                         sessionsMissed: 1,
                         attendances: [
                             { date: '2024-06-02', status: 'Present' },
                             { date: '2024-06-04', status: 'Present' },
                             { date: '2024-06-06', status: 'Absent' }
                         ]
-                    },{ 
-                        id: 'C005', 
-                        name: 'Science', 
-                        teacher: 'Ms. Jones', 
-                        sessionsAttended: 12, 
+                    }, {
+                        id: 'C005',
+                        name: 'Science',
+                        teacher: 'Ms. Jones',
+                        sessionsAttended: 12,
                         sessionsMissed: 1,
                         attendances: [
                             { date: '2024-06-02', status: 'Present' },
@@ -94,6 +108,28 @@ function StudentDashboard({ studentId }) {
             alert(`Failed to fetch student data: ${ex.message}`);
         }
     };
+    const handleFetchAnnouncement = async () => {
+        try {
+            const res = await getApi('announcement');
+            const data = res.data;
+            setAnnouncement({
+                ...announcement,
+                courseName: data.course_name,
+                dayOfWeek: data.day_of_the_week,
+                startTime: data.start_time,
+                endTime: data.end_time,
+                startDate: data.start_date
+            })
+        } catch (e) {
+            alert(`Failed to fetch announcement data: ${e.message}`)
+        }
+    };
+    useEffect(() => {
+        fetchStudentData(studentId);
+        handleFetchAnnouncement(); // Call fetchAdvertisementData when component mounts
+    }, [studentId]);
+
+    const { logoUrl, courseName, dayOfWeek, startTime, endTime, startDate } = announcement;
 
     const handleClassClick = (classId) => {
         setSelectedClass(classId);
@@ -106,7 +142,7 @@ function StudentDashboard({ studentId }) {
     return (
         <div className={styles.studentDashboard}>
             <h1>Welcome, {studentData.studentName}!</h1>
-                <h2>Class Information:</h2>
+            <h2>Class Information:</h2>
             <div className={styles.classInformation}>
                 {studentData.classes && studentData.classes.map((classInfo) => (
                     <div
@@ -133,6 +169,19 @@ function StudentDashboard({ studentId }) {
                         ))}
                     </ul>
                 </div>
+            )}
+            {/* Popup Announcement */}
+            {isPopupOpen && (
+                <Popup onClose={togglePopup}>
+                    <Announcement
+                        logo={logoUrl}
+                        courseName={courseName}
+                        dayOfWeek={dayOfWeek}
+                        startTime={startTime}
+                        endTime={endTime}
+                        startDate={startDate}
+                    />
+                </Popup>
             )}
         </div>
     );

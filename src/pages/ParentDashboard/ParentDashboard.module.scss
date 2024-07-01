@@ -5,17 +5,17 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     height: 100%;
 
-    h1 {
-        color: #333;
-        font-size: 24px;
-        margin-bottom: 20px;
-    }
+    // h1 {
+    //     color: #333;
+    //     font-size: 24px;
+    //     margin-bottom: 20px;
+    // }
 
-    h2 {
-        color: #555;
-        font-size: 20px;
-        margin-bottom: 15px;
-    }
+    // h2 {
+    //     color: #555;
+    //     font-size: 20px;
+    //     margin-bottom: 15px;
+    // }
 
     h3 {
         color: #777;
@@ -103,7 +103,7 @@
     }
 
     ul {
-        list-style-type: none;
+        // list-style-type: none;
         padding: 0;
     }
 
@@ -156,7 +156,7 @@
         border-radius: 4px;
     }
 
-    button {
+    .submitButton {
         padding: 8px 12px;
         background-color: #007bff;
         color: #fff;
