@@ -7,7 +7,8 @@ const fakeClassDetail = {
     teacher: 'Teacher A',
     expectedLesson: 20,
     completed: 15,
-    paidFee: 500, // Example: Replace with actual fee value or keep it dynamic
+    totalFee: 6000, // Total expected fee for this class
+    paidFee: 5000, // Total paid fee for this class
     students: [
         {
             name: 'Student 1',
@@ -15,7 +16,8 @@ const fakeClassDetail = {
             birthday: '2005-06-15',
             absents: 2,
             attendances: 18,
-            paidFee: 300, // Example: Replace with actual fee value
+            totalFee: 1000, // Total expected fee for this student
+            paidFee: 300, // Actual fee paid by the student
         },
         {
             name: 'Student 2',
@@ -23,7 +25,8 @@ const fakeClassDetail = {
             birthday: '2006-07-20',
             absents: 0,
             attendances: 20,
-            paidFee: 450, // Example: Replace with actual fee value
+            totalFee: 1200, // Total expected fee for this student
+            paidFee: 450, // Actual fee paid by the student
         },
         // Add more student data as needed
     ],
@@ -50,7 +53,8 @@ function RecordClassDetail() {
                 <h2>{`${classDetail.className} - ${classDetail.teacher}`}</h2>
                 <p>Expected Lessons: {classDetail.expectedLesson}</p>
                 <p>Completed Lessons: {classDetail.completed}</p>
-                <p>Paid Fee: ${classDetail.paidFee}</p> {/* Display the paid fee */}
+                <p>Total Fee: ${classDetail.totalFee}</p> {/* Display the total fee */}
+                <p>Total Paid: ${classDetail.paidFee}</p> {/* Display the paid fee */}
             </div>
             <table className={styles.studentTable}>
                 <thead>
@@ -61,6 +65,7 @@ function RecordClassDetail() {
                         <th>Absents</th>
                         <th>Attendances</th>
                         <th>Total Fee</th>
+                        <th>Paid Fee</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -72,6 +77,7 @@ function RecordClassDetail() {
                             <td>{student.birthday}</td>
                             <td>{student.absents}</td>
                             <td>{student.attendances}</td>
+                            <td>${student.totalFee}</td> {/* Display student's total fee */}
                             <td>${student.paidFee}</td> {/* Display student's paid fee */}
                             <td className={styles.actions}>
                                 <span className={styles.icon} title={`Detail ${student.name}`}>🔍</span>

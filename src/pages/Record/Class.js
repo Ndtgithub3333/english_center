@@ -10,6 +10,7 @@ const fakeData = [
         classSize: 30,
         expectedLesson: 20,
         completed: 15,
+        totalFee: 6000, // Total expected fee for this class
         totalPaid: 5000, // Total paid for this class
     },
     {
@@ -19,6 +20,7 @@ const fakeData = [
         classSize: 25,
         expectedLesson: 18,
         completed: 18,
+        totalFee: 5000, // Total expected fee for this class
         totalPaid: 4500, // Total paid for this class
     },
     // Add more fake class data as needed
@@ -54,6 +56,7 @@ function RecordClass() {
                         <th>Expected Lesson</th>
                         <th>Completed</th>
                         <th>Total Fee</th>
+                        <th>Total Paid</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -66,6 +69,7 @@ function RecordClass() {
                                 <td>{classItem.classSize}</td>
                                 <td>{classItem.expectedLesson}</td>
                                 <td>{classItem.completed}</td>
+                                <td>${classItem.totalFee}</td>
                                 <td>${classItem.totalPaid}</td>
                                 <td className={styles.actions}>
                                     <Link to={`/admin/record/class/${classItem.id}`} className={styles.link}>
@@ -78,7 +82,7 @@ function RecordClass() {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="7" className={styles.loading}>Loading...</td>
+                            <td colSpan="8" className={styles.loading}>Loading...</td>
                         </tr>
                     )}
                 </tbody>

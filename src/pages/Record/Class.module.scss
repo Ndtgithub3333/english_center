@@ -55,13 +55,15 @@
 }
 
 .totalFees {
-    h3 {
-        margin-right: 10px;
-    }
-    p {
-        font-size: 1.2em;
-    }
     display: flex;
     align-items: center;
     justify-content: center;
+    
+    h3 {
+        margin-right: 10px;
+    }
+    
+    p {
+        font-size: 1.2em;
+    }
 }
