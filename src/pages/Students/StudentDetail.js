@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './StudentDetail.module.scss';
+import avatar from '~/assets/avatar.jpg'
 
 const cx = classNames.bind(styles);
 
@@ -12,7 +13,7 @@ function StudentDetail({ student, onClose }) {
             <h2>Student Details</h2>
             <div className={cx('detail-container')}>
                 <div className={cx('photo-section')}>
-                    <img src={student.photo || 'default-student-photo.jpg'} alt="Student" className={cx('student-photo')} />
+                    <img src={student.photo || avatar} alt="Student" className={cx('student-photo')} />
                 </div>
                 <div className={cx('info-section')}>
                     {studentKeys.map((key) => (
