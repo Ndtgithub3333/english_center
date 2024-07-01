@@ -52,6 +52,10 @@
         &:hover {
             background-color: #f0f0f0;
         }
+
+        p {
+            margin: 5px 0;
+        }
     }
 
     .selectedChild {
@@ -65,11 +69,13 @@
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
-    .classInfo {
-        margin-bottom: 20px;
+    .classList {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Each column minimum 250px, auto-fill as many as possible
+        gap: 20px; // Adjust gap between items
     }
 
-    .classSummary {
+    .classInfo {
         padding: 10px;
         background-color: #fff;
         border-radius: 4px;
@@ -78,6 +84,10 @@
 
         &:hover {
             background-color: #f0f0f0;
+        }
+
+        p {
+            margin: 5px 0;
         }
     }
 
@@ -99,6 +109,34 @@
 
     li {
         margin-bottom: 5px;
+    }
+
+    .attendanceList {
+        display: flex;
+        flex-wrap: wrap; // Allow items to wrap to the next line
+        gap: 10px; // Adjust space between items
+        margin-top: 10px; // Add margin at the top
+    }
+
+    .attendanceItem {
+        background-color: #fff;
+        padding: 8px;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        width: calc(33.33% - 10px); // Adjust width based on number of items per row
+        margin-bottom: 10px; // Adjust margin between items
+
+        &:nth-child(3n + 1) {
+            clear: left; // Clear every third item to start a new row
+        }
+    }
+
+    .attendanceDate {
+        font-weight: bold;
+    }
+
+    .attendanceStatus {
+        color: #777;
     }
 
     .paid {
@@ -145,6 +183,7 @@
     }
 
     .remainingAmount {
+        margin-left: 10px;
         color: #f00; // Red color for unpaid
         &.paid {
             color: #0a0; // Green color for fully paid
