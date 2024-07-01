@@ -1,53 +1,74 @@
-.parentDashboard {
+.studentDashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  h1, h2, h3, h4, h5 {
-    color: #333;
+.loading {
+  font-size: 20px;
+  color: #666;
+}
+
+.classInformation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.classInfo {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 200px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover, &.selectedClass {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   }
+}
 
-  .childrenInformation {
+.selectedClass {
+  border-color: #007bff;
+}
+
+.attendanceContainer {
+  margin-top: 30px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.attendanceHeader {
+  margin-bottom: 20px;
+}
+
+.attendanceList {
+  list-style-type: none;
+  padding: 0;
+
+  li {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 5px 10px;
+    border-bottom: 1px solid #eee;
 
-    .childInfo {
-      background-color: #e9e9e9;
-      margin: 10px;
-      padding: 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: #d9d9d9;
-      }
-
-      &.selectedChild {
-        background-color: #d0eaff;
-      }
+    &:last-child {
+      border-bottom: none;
     }
   }
 
-  .childDetails {
-    margin-top: 20px;
+  .date {
+    font-weight: bold;
+  }
 
-    .classInfo {
-      margin-bottom: 20px;
-      padding: 15px;
-      background-color: #ffffff;
-      border: 1px solid #ddd;
-      border-radius: 5px;
+  .status {
+    color: #5cb85c;
 
-      ul {
-        margin: 10px 0;
-        padding-left: 20px;
-
-        li {
-          margin: 5px 0;
-        }
-      }
+    &[class*="Absent"] {
+      color: #d9534f;
     }
   }
 }
