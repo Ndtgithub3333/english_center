@@ -1,208 +1,110 @@
 .parentDashboard {
     padding: 20px;
     background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    height: 100%;
-
-    // h1 {
-    //     color: #333;
-    //     font-size: 24px;
-    //     margin-bottom: 20px;
-    // }
-
-    // h2 {
-    //     color: #555;
-    //     font-size: 20px;
-    //     margin-bottom: 15px;
-    // }
-
-    h3 {
-        color: #777;
-        font-size: 18px;
-        margin-bottom: 10px;
+  
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
     }
-
-    h4 {
-        color: #999;
-        font-size: 16px;
-        margin-bottom: 8px;
+  
+    h2, h3, h4 {
+      margin-top: 20px;
+      font-size: 20px;
     }
-
-    h5 {
-        color: #bbb;
-        font-size: 14px;
-        margin-bottom: 5px;
-    }
-
+  
     .childrenInformation {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-
+  
     .childInfo {
-        padding: 10px;
-        margin-bottom: 10px;
-        background-color: #fff;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            background-color: #f0f0f0;
-        }
-
-        p {
-            margin: 5px 0;
-        }
-    }
-
-    .selectedChild {
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  
+      &.selectedChild {
         background-color: #e0e0e0;
+      }
+  
+      p {
+        margin: 0;
+      }
     }
-
+  
     .childDetails {
-        background-color: #fff;
-        padding: 15px;
-        border-radius: 4px;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .classList {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Each column minimum 250px, auto-fill as many as possible
-        gap: 20px; // Adjust gap between items
-    }
-
-    .classInfo {
+      margin-top: 20px;
+  
+      .classInfo {
         padding: 10px;
         background-color: #fff;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            background-color: #f0f0f0;
-        }
-
-        p {
-            margin: 5px 0;
-        }
-    }
-
-    .selectedClass {
-        background-color: #e0e0e0;
-    }
-
-    .classDetails {
-        background-color: #fff;
-        padding: 15px;
-        border-radius: 4px;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    ul {
-        // list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        margin-bottom: 5px;
-    }
-
-    .attendanceList {
-        display: flex;
-        flex-wrap: wrap; // Allow items to wrap to the next line
-        gap: 10px; // Adjust space between items
-        margin-top: 10px; // Add margin at the top
-    }
-
-    .attendanceItem {
-        background-color: #fff;
-        padding: 8px;
-        border-radius: 4px;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        width: calc(33.33% - 10px); // Adjust width based on number of items per row
-        margin-bottom: 10px; // Adjust margin between items
-
-        &:nth-child(3n + 1) {
-            clear: left; // Clear every third item to start a new row
-        }
-    }
-
-    .attendanceDate {
-        font-weight: bold;
-    }
-
-    .attendanceStatus {
-        color: #777;
-    }
-
-    .paid {
-        color: green;
-        font-weight: bold;
-    }
-
-    .unpaid {
-        color: red;
-        font-weight: bold;
-    }
-
-    input[type='number'] {
-        padding: 8px;
-        margin-right: 10px;
         border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    .submitButton {
-        padding: 8px 12px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            background-color: #0056b3;
+        transition: background-color 0.3s;
+        margin-bottom: 10px;
+  
+        &.selectedClass {
+          background-color: #d0d0d0;
         }
+  
+        p {
+          margin: 0;
+        }
+      }
     }
-
-    .error {
+  
+    .classDetails {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+  
+      h4 {
+        margin-top: 0;
+      }
+  
+      p {
+        margin: 5px 0;
+      }
+  
+      input {
+        display: block;
+        margin: 10px 0;
+        padding: 5px;
+        width: 100%;
+      }
+  
+      .error {
         color: red;
-        font-weight: bold;
-        margin-top: 10px;
-    }
-
-    .loading {
-        text-align: center;
-        font-size: 18px;
-        color: #777;
-    }
-
-    .remainingAmount {
-        margin-left: 10px;
-        color: #f00; // Red color for unpaid
-        &.paid {
-            color: #0a0; // Green color for fully paid
-        }
-    }
-
-    .paymentHistory {
-        list-style-type: none;
-        padding: 0;
-
-        li {
+      }
+  
+      .paymentHistory {
+        margin-top: 20px;
+  
+        ul {
+          padding: 0;
+          list-style: none;
+  
+          li {
             display: flex;
             justify-content: space-between;
             padding: 5px 0;
-            border-bottom: 1px solid #ddd;
-
-            &:last-child {
-                border-bottom: none;
+            border-bottom: 1px solid #ccc;
+  
+            span {
+              display: block;
             }
+          }
         }
+      }
     }
-}
+  
+    .loading {
+      text-align: center;
+      font-size: 18px;
+      color: #666;
+    }
+  }
+  

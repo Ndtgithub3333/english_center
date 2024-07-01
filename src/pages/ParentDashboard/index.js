@@ -34,7 +34,6 @@ function ParentDashboard({ parentId }) {
           {
             id: 'S001',
             name: 'Alice Johnson',
-            discount: 10, // Discount percentage
             classes: [
               {
                 id: 'C001',
@@ -43,6 +42,7 @@ function ParentDashboard({ parentId }) {
                 sessionsAttended: 15,
                 sessionsMissed: 3,
                 fee: 1000000,
+                discount: 10,
                 amountPaid: 800000,
                 paymentHistory: [],
                 attendances: [
@@ -58,12 +58,35 @@ function ParentDashboard({ parentId }) {
                 sessionsAttended: 12,
                 sessionsMissed: 1,
                 fee: 1200000,
+                discount: 15,
                 amountPaid: 1000000,
                 paymentHistory: [],
                 attendances: [
                   { date: '2024-06-02', status: 'Present' },
                   { date: '2024-06-04', status: 'Present' },
                   { date: '2024-06-06', status: 'Absent' },
+                ],
+              },
+            ],
+          },
+          {
+            id: 'S002',
+            name: 'Bob Johnson',
+            classes: [
+              {
+                id: 'C003',
+                name: 'History',
+                teacher: 'Mr. Brown',
+                sessionsAttended: 10,
+                sessionsMissed: 2,
+                fee: 900000,
+                discount: 5,
+                amountPaid: 500000,
+                paymentHistory: [],
+                attendances: [
+                  { date: '2024-06-02', status: 'Present' },
+                  { date: '2024-06-05', status: 'Present' },
+                  { date: '2024-06-07', status: 'Absent' },
                 ],
               },
             ],
@@ -128,7 +151,7 @@ function ParentDashboard({ parentId }) {
     // Calculate amount left to pay for the selected class
     const child = parentData.children.find(c => c.id === selectedChild);
     const selectedClassInfo = child.classes.find(c => c.id === classId);
-    const amountLeftToPay = (selectedClassInfo.fee * (1 - child.discount / 100)) - selectedClassInfo.amountPaid;
+    const amountLeftToPay = (selectedClassInfo.fee * (1 - selectedClassInfo.discount / 100)) - selectedClassInfo.amountPaid;
     setAmountLeft(amountLeftToPay);
   };
 
@@ -197,7 +220,6 @@ function ParentDashboard({ parentId }) {
             onClick={() => handleChildClick(child.id)}
           >
             <p>Name: {child.name}</p>
-            <p>Discount: {child.discount}%</p>
           </div>
         ))}
       </div>
@@ -230,28 +252,23 @@ function ParentDashboard({ parentId }) {
             ))}
           </ul>
           <div>
-            <h5>Payment Information:</h5>
+            <h4>Payment Details:</h4>
             <p>Fee: {parentData.children.find(child => child.id === selectedChild).classes.find(cls => cls.id === selectedClass).fee.toLocaleString()} VND</p>
-            <p>Discount: {parentData.children.find(child => child.id === selectedChild).discount}%</p>
+            <p>Discount: {parentData.children.find(child => child.id === selectedChild).classes.find(cls => cls.id === selectedClass).discount}%</p>
             <p>Amount Paid: {parentData.children.find(child => child.id === selectedChild).classes.find(cls => cls.id === selectedClass).amountPaid.toLocaleString()} VND</p>
-            <p>
-              Remaining Amount: 
-              <span className={`${styles.remainingAmount} ${amountLeft === 0 ? styles.paid : ''}`}>
-                {amountLeft.toLocaleString()} VND
-              </span>
-            </p>
-            <input 
+            <p>Amount Left: <span style={{color: amountLeft === 0 ? 'green' : 'red'}}>{amountLeft.toLocaleString()} VND</span></p>
+            <input
               type="number"
+              placeholder="Enter payment amount"
               value={paymentAmount}
               onChange={handlePaymentChange}
-              placeholder="Enter payment amount"
             />
-            <button className={styles.submitButton} onClick={handlePaymentSubmit}>Submit Payment</button>
+            <button style={{backgroundColor: '#0aa3dd', color: '#fff'}} onClick={handlePaymentSubmit}>Submit Payment</button>
             {error && <p className={styles.error}>{error}</p>}
           </div>
-          <div>
-            <h5>Payment History:</h5>
-            <ul className={styles.paymentHistory}>
+          <div className={styles.paymentHistory}>
+            <h4>Payment History:</h4>
+            <ul>
               {parentData.children.find(child => child.id === selectedChild).classes.find(cls => cls.id === selectedClass).paymentHistory.map((payment, index) => (
                 <li key={index}>
                   <span>{payment.date}:</span>
