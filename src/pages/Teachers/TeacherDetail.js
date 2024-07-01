@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './TeacherDetail.module.scss';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import avatar from '~/assets/avatar.jpg'
 
 const cx = classNames.bind(styles);
 
@@ -19,7 +20,7 @@ function TeacherDetail({ teacher, onClose }) {
             <h2>Teacher Details</h2>
             <div className={cx('detail-container')}>
                 <div className={cx('photo-section')}>
-                    <img src={teacher.photo} alt="Teacher" className={cx('teacher-photo')} />
+                    <img src={avatar} alt="Teacher" className={cx('teacher-photo')} />
                 </div>
                 <div className={cx('info-section')}>
                     {filteredKeys.map((key) => (
