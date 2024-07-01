@@ -1,0 +1,169 @@
+.parentDashboard {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%;
+
+    h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        color: #555;
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        color: #777;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    h4 {
+        color: #999;
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    h5 {
+        color: #bbb;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .childrenInformation {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+    .childInfo {
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
+
+    .selectedChild {
+        background-color: #e0e0e0;
+    }
+
+    .childDetails {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .classInfo {
+        margin-bottom: 20px;
+    }
+
+    .classSummary {
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
+
+    .selectedClass {
+        background-color: #e0e0e0;
+    }
+
+    .classDetails {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 5px;
+    }
+
+    .paid {
+        color: green;
+        font-weight: bold;
+    }
+
+    .unpaid {
+        color: red;
+        font-weight: bold;
+    }
+
+    input[type='number'] {
+        padding: 8px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        padding: 8px 12px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+
+    .error {
+        color: red;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .loading {
+        text-align: center;
+        font-size: 18px;
+        color: #777;
+    }
+
+    .remainingAmount {
+        color: #f00; // Red color for unpaid
+        &.paid {
+            color: #0a0; // Green color for fully paid
+        }
+    }
+
+    .paymentHistory {
+        list-style-type: none;
+        padding: 0;
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+}

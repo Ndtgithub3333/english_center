@@ -1,71 +1,53 @@
-.studentDashboard {
-    padding: 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    height: 100%;
+.parentDashboard {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-    h1 {
-        font-size: 24px;
-        margin-bottom: 10px;
+  h1, h2, h3, h4, h5 {
+    color: #333;
+  }
+
+  .childrenInformation {
+    display: flex;
+    flex-wrap: wrap;
+
+    .childInfo {
+      background-color: #e9e9e9;
+      margin: 10px;
+      padding: 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #d9d9d9;
+      }
+
+      &.selectedChild {
+        background-color: #d0eaff;
+      }
     }
+  }
 
-    .classInformation {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        margin-top: 20px;
+  .childDetails {
+    margin-top: 20px;
 
-        .classInfo {
-            width: calc(25% - 20px); /* Adjust width as needed */
-            background-color: #fff;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            cursor: pointer;
+    .classInfo {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
 
-            p {
-                margin: 5px 0;
-            }
+      ul {
+        margin: 10px 0;
+        padding-left: 20px;
 
-            &:hover {
-                background-color: #f0f0f0;
-            }
-
-            &.selectedClass {
-                background-color: #d3eafd;
-            }
+        li {
+          margin: 5px 0;
         }
+      }
     }
-
-    .attendanceContainer {
-        margin-top: 20px;
-
-        .attendanceHeader {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .attendanceList {
-            list-style-type: none;
-            padding: 0;
-
-            li {
-                border: 1px solid #ddd;
-                background-color: #fff;
-                margin-bottom: 10px;
-                padding: 10px;
-                border-radius: 5px;
-
-                .date {
-                    font-weight: bold;
-                }
-
-                .status {
-                    margin-left: 10px;
-                    font-style: italic;
-                }
-            }
-        }
-    }
+  }
 }

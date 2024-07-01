@@ -19,6 +19,7 @@ import RecordTeacher from '~/pages/Record/Teacher';
 import RecordStudent from '~/pages/Record/Student';
 import RecordParent from '~/pages/Record/Parent';
 import StudentDashboard from '~/pages/StudentDashboard';
+import ParentDashboard from '~/pages/ParentDashboard';
 
 
 // Define public routes
@@ -40,6 +41,7 @@ const publicRoutes = [
     { path: '/admin/record/parent', component: RecordParent },
     { path: '/admin/advertising', component: Advertising },
     { path: '/student-dashboard', component: StudentDashboard, layout: HeaderOnly },
+    {path: '/parent-dashboard', component: ParentDashboard, layout: HeaderOnly},
     { path: '/profile', component: Profile },
 ];
 
