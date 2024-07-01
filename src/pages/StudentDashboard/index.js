@@ -35,6 +35,9 @@ function StudentDashboard({ studentId }) {
                         teacher: 'Mr. Smith',
                         sessionsAttended: 15,
                         sessionsMissed: 3,
+                        days: ['Monday', 'Wednesday'],
+                        startTime: '8AM',
+                        endTime: '10AM',
                         attendances: [
                             { date: '2024-06-01', status: 'Present' },
                             { date: '2024-06-03', status: 'Absent' },
@@ -47,41 +50,9 @@ function StudentDashboard({ studentId }) {
                         teacher: 'Ms. Jones',
                         sessionsAttended: 12,
                         sessionsMissed: 1,
-                        attendances: [
-                            { date: '2024-06-02', status: 'Present' },
-                            { date: '2024-06-04', status: 'Present' },
-                            { date: '2024-06-06', status: 'Absent' }
-                        ]
-                    },
-                    {
-                        id: 'C003',
-                        name: 'Science',
-                        teacher: 'Ms. Jones',
-                        sessionsAttended: 12,
-                        sessionsMissed: 1,
-                        attendances: [
-                            { date: '2024-06-02', status: 'Present' },
-                            { date: '2024-06-04', status: 'Present' },
-                            { date: '2024-06-06', status: 'Absent' }
-                        ]
-                    },
-                    {
-                        id: 'C004',
-                        name: 'Science',
-                        teacher: 'Ms. Jones',
-                        sessionsAttended: 12,
-                        sessionsMissed: 1,
-                        attendances: [
-                            { date: '2024-06-02', status: 'Present' },
-                            { date: '2024-06-04', status: 'Present' },
-                            { date: '2024-06-06', status: 'Absent' }
-                        ]
-                    }, {
-                        id: 'C005',
-                        name: 'Science',
-                        teacher: 'Ms. Jones',
-                        sessionsAttended: 12,
-                        sessionsMissed: 1,
+                        days: ['Tuesday', 'Thursday'],
+                        startTime: '10AM',
+                        endTime: '12PM',
                         attendances: [
                             { date: '2024-06-02', status: 'Present' },
                             { date: '2024-06-04', status: 'Present' },
@@ -108,6 +79,7 @@ function StudentDashboard({ studentId }) {
             alert(`Failed to fetch student data: ${ex.message}`);
         }
     };
+
     const handleFetchAnnouncement = async () => {
         try {
             const res = await getApi('announcement');
@@ -119,11 +91,12 @@ function StudentDashboard({ studentId }) {
                 startTime: data.start_time,
                 endTime: data.end_time,
                 startDate: data.start_date
-            })
+            });
         } catch (e) {
-            alert(`Failed to fetch announcement data: ${e.message}`)
+            alert(`Failed to fetch announcement data: ${e.message}`);
         }
     };
+
     useEffect(() => {
         fetchStudentData(studentId);
         handleFetchAnnouncement(); // Call fetchAdvertisementData when component mounts
@@ -154,6 +127,8 @@ function StudentDashboard({ studentId }) {
                         <p>Teacher: {classInfo.teacher}</p>
                         <p>Sessions Attended: {classInfo.sessionsAttended}</p>
                         <p>Sessions Missed: {classInfo.sessionsMissed}</p>
+                        <p>Days: {classInfo.days.join(', ')}</p>
+                        <p>Time: {classInfo.startTime} - {classInfo.endTime}</p>
                     </div>
                 ))}
             </div>

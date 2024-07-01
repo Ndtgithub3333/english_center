@@ -37,6 +37,8 @@ function TeacherDashboard({ teacherId }) {
                         name: 'Mathematics',
                         projectedSessions: 30,
                         sessionsTaught: 20,
+                        day: 'Monday',
+                        time: '10:00 AM - 12:00 PM',
                         students: [
                             { id: 'S001', name: 'Alice Johnson', email: 'alice@mail.com', phone: '123-456-7890', attended: 18, missed: 2 },
                             { id: 'S002', name: 'Bob Brown', email: 'bob@mail.com', phone: '123-456-7891', attended: 17, missed: 3 },
@@ -50,6 +52,8 @@ function TeacherDashboard({ teacherId }) {
                         name: 'Science',
                         projectedSessions: 25,
                         sessionsTaught: 18,
+                        day: 'Wednesday',
+                        time: '1:00 PM - 3:00 PM',
                         students: [
                             { id: 'S006', name: 'Frank White', email: 'frank@mail.com', phone: '123-456-7895', attended: 18, missed: 0 },
                             { id: 'S007', name: 'Grace Kelly', email: 'grace@mail.com', phone: '123-456-7896', attended: 16, missed: 2 },
@@ -69,6 +73,7 @@ function TeacherDashboard({ teacherId }) {
             alert(`Failed to fetch teacher data: ${ex.message}`);
         }
     };
+
     const handleFetchAnnouncement = async () => {
         try {
             const res = await getApi('announcement');
@@ -160,6 +165,8 @@ function TeacherDashboard({ teacherId }) {
                         onClick={() => handleClassClick(classInfo.id)}
                     >
                         <p>Class: {classInfo.name}</p>
+                        <p>Day: {classInfo.day}</p>
+                        <p>Time: {classInfo.time}</p>
                         <p>Projected Sessions: {classInfo.projectedSessions}</p>
                         <p>Sessions Taught: {classInfo.sessionsTaught}</p>
                     </div>
