@@ -27,7 +27,6 @@ function TeacherDashboard({ teacherId }) {
         fetchTeacherData(teacherId);
     }, [teacherId]);
 
-
     const fetchTeacherData = async (teacherId) => {
         try {
             const fakeTeacherData = {
@@ -66,41 +65,14 @@ function TeacherDashboard({ teacherId }) {
                 ]
             };
 
-            // setTimeout(() => {
-            //     setTeacherData(fakeTeacherData);
-            // }, 1000);
-
-            const res = await getApi(`teacher/classes${teacherId}`);
-            const data = res.data;
-            setTeacherData(
-                {
-                    teacherName: data.teacherName, 
-                    classes: data.classes.map(classInfo => {
-                        return {
-                            id: classInfo.id,
-                            name: classInfo.class_name,
-                            projectedSessions: classInfo.expected_lessons,
-                            sessionsTaught: 20,
-                            students: classInfo.students.map(student => {
-                                return {
-                                    id: student.id,
-                                    name: student.full_name,
-                                    email: student.email,
-                                    phone: student.phone,
-                                    attended: student.attended,
-                                    missed: student.missed
-                                }
-                            })
-                        }
-                    })
-                }
-            );
+            setTimeout(() => {
+                setTeacherData(fakeTeacherData);
+            }, 1000);
 
         } catch (ex) {
             alert(`Failed to fetch teacher data: ${ex.message}`);
         }
     };
-
     const handleFetchAnnouncement = async () => {
         try {
             const res = await getApi('announcement');
@@ -121,51 +93,42 @@ function TeacherDashboard({ teacherId }) {
         fetchTeacherData(teacherId);
         handleFetchAnnouncement(); // Call fetchAdvertisementData when component mounts
     }, [teacherId]);
-
     const { logoUrl, courseName, dayOfWeek, startTime, endTime, startDate } = announcement;
-
     const handleClassClick = (classId) => {
         setSelectedClass(classId);
         setTakingAttendance(false);
     };
-
     const handleAttendanceClick = () => {
         setTakingAttendance(true);
         setAttendanceData({});
         setAttendanceDate('');
     };
-
     const handleCheckboxChange = (studentId) => {
         setAttendanceData((prevData) => ({
             ...prevData,
             [studentId]: !prevData[studentId]
         }));
     };
-
     const handleSaveAttendance = () => {
         if (!attendanceDate) {
             alert('Please select a date for attendance.');
             return;
         }
-
         const classAttendance = attendanceRecords[selectedClass] || {};
         classAttendance[attendanceDate] = attendanceData;
         setAttendanceRecords({ ...attendanceRecords, [selectedClass]: classAttendance });
         setTakingAttendance(false);
     };
-
     const handleViewAttendance = (date) => {
         setAttendanceDate(date);
         const classAttendance = attendanceRecords[selectedClass] || {};
         setAttendanceData(classAttendance[date] || {});
         setTakingAttendance(true);
     };
-
     const getAttendanceRecord = (classId, date) => {
         const classAttendance = attendanceRecords[classId] || {};
         return date ? classAttendance[date] || {} : classAttendance;
     };
-
     const filterStudents = (students) => {
         return students.filter(student => {
             const isPresent = attendanceData[student.id];
@@ -175,11 +138,9 @@ function TeacherDashboard({ teacherId }) {
             return true;
         });
     };
-
     if (!teacherData) {
         return <div className={styles.loading}>Loading...</div>;
     }
-
     return (
         <div className={styles.teacherDashboard}>
             <h1>Welcome, {teacherData.teacherName}!</h1>
@@ -280,5 +241,4 @@ function TeacherDashboard({ teacherId }) {
         </div>
     );
 }
-
 export default TeacherDashboard;
