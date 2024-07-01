@@ -17,7 +17,6 @@ function EditStudentForm({ onSave, onCancel, studentData }) {
     const [parentName, setParentName] = useState('');
     const [parentPhone, setParentPhone] = useState('');
     const [parentEmail, setParentEmail] = useState('');
-    const [parentGender, setParentGender] = useState('');
     const [password, setPassword] = useState('');
 
     useEffect(() => {
@@ -29,13 +28,12 @@ function EditStudentForm({ onSave, onCancel, studentData }) {
             setMobilePhone(studentData.phone || '');
             setEmail(studentData.email || '');
             setHomeAddress(studentData.homeAddress || '');
-            setParentName(studentData.parent.name || '');
+            setParentName(studentData.parent.full_name || '');
             setParentPhone(studentData.parent.phone || '');
             setParentEmail(studentData.parent.email || '');
-            setParentGender(studentData.parent.gender || '');
             setPassword(studentData.password || '');
         }
-    }, [studentData]);
+    }, []);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -60,46 +58,13 @@ function EditStudentForm({ onSave, onCancel, studentData }) {
             homeAddress,
             parent: {
                 ...studentData.parent,
-                name: parentName,
+                full: parentName,
                 phone: parentPhone,
                 email: parentEmail,
-                gender: parentGender,
             },
             password,
         };
-
-        try {
-            // Convert photo file to base64 string
-            const photoFile = await fetch(photo);
-            const photoBlob = await photoFile.blob();
-            const photoBase64 = await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(photoBlob);
-            });
-
-            const data = {
-                gender,
-                picture: photoBase64,
-                mobile_phone: mobilePhone,
-                home_address: homeAddress,
-                full_name: fullName,
-                date_of_birth: dateOfBirth,
-                email,
-                parent_name: parentName,
-                parent_phone: parentPhone,
-                parent_email: parentEmail,
-                parent_gender: parentGender,
-                password,
-            };
-            await postApi('student', data);
-        } catch (ex) {
-            alert(`Failed to update student: ${ex.message}`);
-            return;
-        }
         onSave(updatedStudent);
-        alert('Student updated successfully!');
     };
 
     const handleCancel = () => {
@@ -130,22 +95,6 @@ function EditStudentForm({ onSave, onCancel, studentData }) {
                     </select>
                 </div>
                 <div className={cx('form-group')}>
-                    <label>Date of Birth</label>
-                    <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
-                </div>
-                <div className={cx('form-group')}>
-                    <label>Mobile Phone</label>
-                    <input type="tel" value={mobilePhone} onChange={(e) => setMobilePhone(e.target.value)} />
-                </div>
-                <div className={cx('form-group')}>
-                    <label>Email</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div className={cx('form-group')}>
-                    <label>Home Address</label>
-                    <input type="text" value={homeAddress} onChange={(e) => setHomeAddress(e.target.value)} />
-                </div>
-                <div className={cx('form-group')}>
                     <label>Parent's Name</label>
                     <input type="text" value={parentName} onChange={(e) => setParentName(e.target.value)} />
                 </div>
@@ -156,14 +105,6 @@ function EditStudentForm({ onSave, onCancel, studentData }) {
                 <div className={cx('form-group')}>
                     <label>Parent's Email</label>
                     <input type="email" value={parentEmail} onChange={(e) => setParentEmail(e.target.value)} />
-                </div>
-                <div className={cx('form-group')}>
-                    <label>Parent's Gender</label>
-                    <select value={parentGender} onChange={(e) => setParentGender(e.target.value)}>
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
                 </div>
                 <div className={cx('form-group')}>
                     <label>Password</label>

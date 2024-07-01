@@ -4,102 +4,26 @@ import styles from './Teachers.module.scss';
 import EditTeacherForm from './EditTeacherForm';
 import TeacherDetail from './TeacherDetail';
 import avatar from '~/assets/avatar.jpg';
-import { getApi } from '~/utils/fetchData';
+import { getApi, patchApi, postApi, delApi } from '~/utils/fetchData';
 
 const cx = classNames.bind(styles);
 
 function Teachers() {
-    const [teachers, setTeachers] = useState([
-        {
-            id: 1,
-            fullName: 'John Doe',
-            photo: avatar,
-            gender: 'Male',
-            dateOfBirth: '01/01/1980',
-            mobilePhone: '123-456-7890',
-            email: 'john@example.com',
-            monthlySalary: '20,000,000 VND',
-            dateOfJoining: '2023-01-01',
-            homeAddress: '123 Main St',
-            employeeRole: 'Math Teacher',
-            accountStatus: 'Active',
-            username: 'johndoe',
-            password: '123456'
-        },
-        {
-            id: 2,
-            fullName: 'Jane Smith',
-            photo: avatar,
-            gender: 'Female',
-            dateOfBirth: '15/06/1985',
-            mobilePhone: '098-765-4321',
-            email: 'jane@example.com',
-            monthlySalary: '22,000,000 VND',
-            dateOfJoining: '2022-12-15',
-            homeAddress: '456 Maple Ave',
-            employeeRole: 'English Teacher',
-            accountStatus: 'Inactive',
-            username: 'janesmith',
-            password: '123456'
-        },
-        {
-            id: 3,
-            fullName: 'Emily Johnson',
-            photo: avatar,
-            gender: 'Female',
-            dateOfBirth: '20/09/1990',
-            mobilePhone: '456-789-0123',
-            email: 'emily@example.com',
-            monthlySalary: '25,000,000 VND',
-            dateOfJoining: '2023-02-01',
-            homeAddress: '789 Pine St',
-            employeeRole: 'Science Teacher',
-            accountStatus: 'Active',
-            username: 'emilyjohnson',
-            password: '123456'
-        },
-        {
-            id: 4,
-            fullName: 'Michael Brown',
-            photo: avatar,
-            gender: 'Male',
-            dateOfBirth: '11/03/1975',
-            mobilePhone: '321-654-0987',
-            email: 'michael@example.com',
-            monthlySalary: '18,000,000 VND',
-            dateOfJoining: '2023-03-01',
-            homeAddress: '101 Oak St',
-            employeeRole: 'History Teacher',
-            accountStatus: 'Active',
-            username: 'michaelbrown',
-            password: '123456'
-        },
-        {
-            id: 5,
-            fullName: 'Sarah Davis',
-            photo: avatar,
-            gender: 'Female',
-            dateOfBirth: '25/12/1988',
-            mobilePhone: '567-890-1234',
-            email: 'sarah@example.com',
-            monthlySalary: '24,000,000 VND',
-            dateOfJoining: '2023-04-01',
-            homeAddress: '202 Birch St',
-            employeeRole: 'Art Teacher',
-            accountStatus: 'Inactive',
-            username: 'sarahdavis',
-            password: '123456'
-        }
-    ]);
+    const [teachers, setTeachers] = useState([]);
 
     const [showForm, setShowForm] = useState(false);
     const [editTeacherId, setEditTeacherId] = useState(null);
     const [viewTeacherId, setViewTeacherId] = useState(null);
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this teacher?");
         if (confirmDelete) {
             setTeachers(teachers.filter(teacher => teacher.id !== id));
+            try {
+                await delApi(`teacher/${id}`);
+            } catch (ex) {
+                alert(`Failed to delete teacher: ${ex.message}`);
+            }
         }
     };
 
@@ -158,20 +82,58 @@ function Teachers() {
             employeeRole: cls.employee_role,
             accountStatus: cls.account_status == 1 ? 'Active' : 'Inactive',
             username: cls.user_name,
-            // password: '123456'
+            password: cls.password
             })))
         } catch(ex) {
             alert(`Failed to fetch teachers: ${ex.message}`);
         }
     }
 
-    const handleCreateTeacher = (newTeacherData) => {
+    const handleCreateTeacher = async (newTeacherData) => {
         if (editTeacherId !== null) {
+
             const updatedTeachers = teachers.map(teacher => (teacher.id === editTeacherId ? newTeacherData : teacher));
             setTeachers(updatedTeachers);
+
+            try {
+                await patchApi(`teacher/${editTeacherId}`,{
+                    full_name: newTeacherData.fullName,
+                    gender: newTeacherData.gender,
+                    date_of_birth: newTeacherData.dateOfBirth,
+                    mobile_phone: newTeacherData.mobilePhone,
+                    email: newTeacherData.email,
+                    monthly_salary: newTeacherData.monthlySalary,
+                    home_address: newTeacherData.homeAddress,
+                    employee_role: newTeacherData.employeeRole,
+                    account_status: newTeacherData.accountStatus === 'Active' ? 1 : 0,
+                    user_name: newTeacherData.username,
+                    password: newTeacherData.password
+                })
+            } catch(ex) {
+                alert(`Failed to update class: ${ex.message}`);
+            }
         } else {
             newTeacherData.id = teachers.length + 1;
             setTeachers([...teachers, newTeacherData]);
+
+            try {
+                console.log(newTeacherData);
+                await postApi('teacher', {
+                    full_name: newTeacherData.fullName,
+                    gender: newTeacherData.gender,
+                    date_of_birth: newTeacherData.dateOfBirth,
+                    mobile_phone: newTeacherData.mobilePhone,
+                    email: newTeacherData.email,
+                    monthly_salary: newTeacherData.monthlySalary,
+                    home_address: newTeacherData.homeAddress,
+                    employee_role: newTeacherData.employeeRole,
+                    account_status: newTeacherData.accountStatus === 'Active' ? 1 : 0,
+                    user_name: newTeacherData.username,
+                    password: newTeacherData.password
+                });
+            } catch(ex) {
+                alert(`Failed to create class: ${ex.message}`);
+            }
         }
         setShowForm(false);
         setEditTeacherId(null);

@@ -27,6 +27,7 @@ function TeacherDashboard({ teacherId }) {
         fetchTeacherData(teacherId);
     }, [teacherId]);
 
+
     const fetchTeacherData = async (teacherId) => {
         try {
             const fakeTeacherData = {
@@ -65,9 +66,35 @@ function TeacherDashboard({ teacherId }) {
                 ]
             };
 
-            setTimeout(() => {
-                setTeacherData(fakeTeacherData);
-            }, 1000);
+            // setTimeout(() => {
+            //     setTeacherData(fakeTeacherData);
+            // }, 1000);
+
+            const res = await getApi(`teacher/classes${teacherId}`);
+            const data = res.data;
+            setTeacherData(
+                {
+                    teacherName: data.teacherName, 
+                    classes: data.classes.map(classInfo => {
+                        return {
+                            id: classInfo.id,
+                            name: classInfo.class_name,
+                            projectedSessions: classInfo.expected_lessons,
+                            sessionsTaught: 20,
+                            students: classInfo.students.map(student => {
+                                return {
+                                    id: student.id,
+                                    name: student.full_name,
+                                    email: student.email,
+                                    phone: student.phone,
+                                    attended: student.attended,
+                                    missed: student.missed
+                                }
+                            })
+                        }
+                    })
+                }
+            );
 
         } catch (ex) {
             alert(`Failed to fetch teacher data: ${ex.message}`);

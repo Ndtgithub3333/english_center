@@ -11,7 +11,6 @@ const cx = classNames.bind(styles);
 function Login({ userType: initialUserType = 'student' }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [userType, setUserType] = useState(initialUserType); // Sử dụng useState để thiết lập giá trị mặc định
 
     const navigate = useNavigate();
 
@@ -23,7 +22,7 @@ function Login({ userType: initialUserType = 'student' }) {
         setPassword(event.target.value);
     };
 
-    const handleNavigate = () => {
+    const handleNavigate = (userType) => {
         switch (userType) {
             case 'student':
                 navigate('/student-dashboard');
@@ -49,13 +48,14 @@ function Login({ userType: initialUserType = 'student' }) {
         const formData = {
             user_name: username,
             password: password,
-            user_type: userType
         };
 
         try {
             const response = await postApi('auth/login', formData);
             if (response.status === 200) {
-                handleNavigate();
+                const userType = response.data.user.user_type
+
+                handleNavigate(userType);
             } else {
                 alert('Đăng nhập thất bại!');
             }

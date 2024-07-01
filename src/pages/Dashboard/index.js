@@ -3,145 +3,71 @@ import classNames from 'classnames/bind';
 import Chart from 'chart.js/auto'; // Importing 'chart.js/auto' to utilize the new modular version
 import styles from './Dashboard.module.scss';
 import 'chartjs-adapter-date-fns'; // Importing 'chartjs-adapter-date-fns' for date formatting in Chart.js
+import { getApi } from '~/utils/fetchData';
 
 const cx = classNames.bind(styles);
 
 const Dashboard = () => {
-    const [totalStudents, setTotalStudents] = useState(1000);
-    const [studentsThisMonth, setStudentsThisMonth] = useState(50);
-    const [totalTeachers, setTotalTeachers] = useState(50);
-    const [studentStatistics, setStudentStatistics] = useState([
-        { className: 'Class 1', count: 30 },
-        { className: 'Class 2', count: 50 },
-        { className: 'Class 3', count: 20 },
-        { className: 'Class 4', count: 40 },
-        { className: 'Class 5', count: 60 },
-    ]);
+    const [totalStudents, setTotalStudents] = useState(0);
+    const [studentsThisMonth, setStudentsThisMonth] = useState(0);
+    const [totalTeachers, setTotalTeachers] = useState(0);
     const [revenueData, setRevenueData] = useState([]);
     const [studentChangesData, setStudentChangesData] = useState([]);
-    const [timeRange, setTimeRange] = useState('quarter'); // Default to quarter view
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const [timeRange, setTimeRange] = useState('month'); // Default to quarter view
+    const [startDate, setStartDate] = useState('2024-01-01');
+    const [endDate, setEndDate] = useState('2024-03-31');
 
     const studentsLineChartRef = useRef(null);
     const revenueChartRef = useRef(null);
 
-    // Function to generate fake data based on the selected time range
-    const generateFakeData = () => {
-        const totalStudents = Math.floor(Math.random() * 2000) + 500;
-        const totalTeachers = Math.floor(Math.random() * 100) + 20;
-        let studentStatistics = [];
-        let studentChangesData = [];
-        let revenueData = [];
-
+    const handleFetchDashboard = async() => {
+        const res = await getApi('dashboard');
+        const data = res.data
+        setTotalStudents(data.totalStudents);
+        setTotalTeachers(data.totalTeachers);
         switch (timeRange) {
             case 'month':
-                // Generate data for the current month
-                const currentMonth = new Date().getMonth() + 1;
-                const daysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
-
-                studentChangesData = Array.from({ length: daysInMonth }, (_, index) => ({
-                    date: `${currentMonth}/${index + 1}`,
-                    value: Math.floor(Math.random() * 50),
-                }));
-
-                revenueData = Array.from({ length: daysInMonth }, (_, index) => {
-                    const date = new Date(new Date().getFullYear(), currentMonth - 1, index + 1);
-                    return {
-                        date: date.toISOString().slice(0, 10),
-                        paidToTeachers: Math.floor(Math.random() * 10000) + 5000,
-                        expectedFromStudents: Math.floor(Math.random() * 20000) + 10000,
-                        collectedFromStudents: Math.floor(Math.random() * 15000) + 5000,
-                    };
-                });
+                setStudentChangesData(data.totalStudentsJoinedByMonth);
                 break;
             case 'quarter':
-                // Generate data for the last 4 quarters
-                for (let i = 0; i < 4; i++) {
-                    const quarter = Math.ceil((new Date().getMonth() + 1) / 3) - i;
-                    const value = Math.floor(Math.random() * 50);
-                    studentChangesData.push({
-                        date: `Q${quarter}`,
-                        value,
-                    });
-                }
-
-                revenueData = Array.from({ length: 30 }, (_, index) => {
-                    const date = new Date();
-                    date.setDate(date.getDate() - (30 - index));
-                    return {
-                        date: date.toISOString().slice(0, 10),
-                        paidToTeachers: Math.floor(Math.random() * 10000) + 5000,
-                        expectedFromStudents: Math.floor(Math.random() * 20000) + 10000,
-                        collectedFromStudents: Math.floor(Math.random() * 15000) + 5000,
-                    };
-                });
+                setStudentChangesData(data.totalStudentsJoinedByQuarter);
                 break;
             case 'year':
-                // Generate data for the current year
-                const currentYear = new Date().getFullYear();
-
-                studentStatistics = [
-                    { className: 'Class 1', count: Math.floor(Math.random() * 50) + 10 },
-                    { className: 'Class 2', count: Math.floor(Math.random() * 50) + 10 },
-                    { className: 'Class 3', count: Math.floor(Math.random() * 50) + 10 },
-                    { className: 'Class 4', count: Math.floor(Math.random() * 50) + 10 },
-                    { className: 'Class 5', count: Math.floor(Math.random() * 50) + 10 },
-                ];
-
-                studentChangesData = Array.from({ length: 12 }, (_, index) => ({
-                    date: `${index + 1}`,
-                    value: Math.floor(Math.random() * 50),
-                }));
-
-                revenueData = Array.from({ length: 12 }, (_, index) => {
-                    const date = new Date(currentYear, index, 1);
-                    return {
-                        date: date.toISOString().slice(0, 10),
-                        paidToTeachers: Math.floor(Math.random() * 10000) + 5000,
-                        expectedFromStudents: Math.floor(Math.random() * 20000) + 10000,
-                        collectedFromStudents: Math.floor(Math.random() * 15000) + 5000,
-                    };
-                });
-                break;
-            default:
+                setStudentChangesData(data.totalStudentsJoinedByYear);
                 break;
         }
+        const currentMonth = new Date().getMonth() + 1;
+        if(data.totalStudentsJoinedByMonth.find(item => item.date === currentMonth)) {
+            setStudentsThisMonth(data.totalStudentsJoinedByMonth.find(item => item.date === currentMonth).value)
+        } else {
+            setStudentsThisMonth(0);
+        }
+    }
 
-        return {
-            totalStudents,
-            totalTeachers,
-            studentStatistics,
-            revenueData,
-            studentChangesData,
-        };
-    };
-
-    // Function to fetch and update dashboard data based on selected time range and dates
-    const handleFetchDashboard = () => {
-        const fakeData = generateFakeData();
-
-        setTotalStudents(fakeData.totalStudents);
-        setTotalTeachers(fakeData.totalTeachers);
-        setStudentStatistics(fakeData.studentStatistics);
-
-        setStudentsThisMonth(fakeData.studentChangesData.reduce((acc, data) => acc + data.value, 0));
-        setStudentChangesData(fakeData.studentChangesData);
-
-        const filteredRevenueData = fakeData.revenueData.filter(item => {
-            if (startDate && endDate) {
-                const itemDate = new Date(item.date);
-                return itemDate >= startDate && itemDate <= endDate;
-            }
-            return true; // No filter applied if startDate or endDate is null
-        });
-        setRevenueData(filteredRevenueData);
-    };
+    const handleFetchRevenue = async() => {
+        const res = await getApi(`dashboard/money-chart?startDate=${startDate}&endDate=${endDate}`);
+        const data = res.data
+        console.log(data)
+        setRevenueData(Array.from({ length: data.length }, (_, index) => {
+            const date = data[index].date;
+            return {
+                date,
+                paidToTeachers: data[index].totalPaidSalary,
+                collectedFromStudents: data[index].totalMoneyCollected, 
+                expectedFromStudents: data[index].totalMoneyExpected
+            };
+        }));
+    }
 
     // Effect to fetch dashboard data initially and on changes to start/end dates or time range
     useEffect(() => {
         handleFetchDashboard();
-    }, [startDate, endDate, timeRange]);
+    }, [timeRange]);
+
+
+    useEffect(() => {
+        handleFetchRevenue();
+    }, [])
 
     // Effect to update the student changes chart when data or time range changes
     useEffect(() => {
@@ -220,20 +146,24 @@ const Dashboard = () => {
                     borderColor: '#ffcd56',
                     tension: 0.1,
                     fill: false
-                }, {
+                }, 
+                {
                     label: 'Expected from Students',
                     data: revenueData.map(item => item.expectedFromStudents),
                     borderColor: '#36a2eb',
                     tension: 0.1,
                     fill: false
-                }, {
+                },
+                 {
                     label: 'Collected from Students',
                     data: revenueData.map(item => item.collectedFromStudents),
                     borderColor: '#ff6384',
                     tension: 0.1,
                     fill: false
-                }]
+                }
+            ]
             };
+
 
             revenueChartRef.current.chart = new Chart(ctxRevenueChart, {
                 type: 'line',
@@ -280,13 +210,11 @@ const Dashboard = () => {
                 }
             });
         }
-    }, [revenueData, timeRange]);
+    }, [revenueData]);
 
     // Function to handle time range changes
     const handleTimeRangeChange = (range) => {
         setTimeRange(range);
-        setStartDate(null);
-        setEndDate(null);
     };
 
     // Function to handle start date change

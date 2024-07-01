@@ -87,37 +87,6 @@ function EditTeacherForm({ onSave, onCancel, teacherData }) {
             monthlySalary,
             homeAddress
         };
-        try {
-            // convert photo file to base64 stringt
-            const photoFile = await fetch(photo);
-            const photoBlob = await photoFile.blob();
-            const photoBase64 = await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(photoBlob);
-            });
-
-            // Create a new teacher
-            const data = {
-                gender: gender, 
-                // picture: photoBase64,
-                mobile_phone: mobilePhone,
-                monthly_salary: monthlySalary,
-                home_address: homeAddress,
-                account_status: accountStatus == 'Active' ? 1 : 0,
-                full_name: fullName,
-                date_of_birth: dateOfBirth,
-                email: email,
-                employee_role: employeeRole,
-                user_name: username, 
-                password: password,
-            }
-            await postApi('teacher', data);
-        } catch(ex) {
-            alert(`Failed to update teacher: ${ex.message}`);
-            return;
-        }
         onSave(updatedTeacher);
         alert('Teacher updated successfully!');
     };
